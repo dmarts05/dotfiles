@@ -51,13 +51,6 @@ sudo systemctl enable cups
 echo "[INFO] Enabling bluetooth..."
 sudo systemctl enable bluetooth
 
-# Set up snapshots with Timeshift and configure GRUB
-echo "[INFO] Setting up snapshots with Timeshift and configuring GRUB..."
-sudo cp ./etc/default/grub /etc/default/grub
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-sudo systemctl enable --now cronie
-sudo systemctl enable --now grub-btrfsd
-
 # Set up xorg devices configuration
 echo "[INFO] Setting up xorg devices configuration..."
 sudo mkdir -p /etc/X11/xorg.conf.d
@@ -80,6 +73,13 @@ sudo cp -r ./usr/share/images/* /usr/share/images/
 # Create directories
 echo "[INFO] Creating directories..."
 mkdir -p {~/Documents,~/Downloads,~/Pictures,~/Videos,~/Music,~/Projects}
+
+# Set up snapshots with Timeshift and configure GRUB
+echo "[INFO] Setting up snapshots with Timeshift and configuring GRUB..."
+sudo cp ./etc/default/grub /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo systemctl enable --now cronie
+sudo systemctl enable --now grub-btrfsd
 
 # Set up git
 echo "[INFO] Setting up git..."
@@ -123,7 +123,7 @@ nvidia-inst
 
 # Clean up
 echo "[INFO] Cleaning up..."
-sudo pacman -Rns --noconfirm yay
+sudo pacman -Rns --noconfirm yay xterm
 rm -rf ~/.cache/yay
 rm -rf ~/.config/yay
 sudo pacman -Rns --noconfirm $(pacman -Qdtq)

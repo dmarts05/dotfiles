@@ -113,7 +113,7 @@ nvidia-inst
 
 # Clean up
 echo "[INFO] Cleaning up..."
-sudo pacman -Rns --noconfirm yay
+sudo pacman -Rns --noconfirm yay xterm
 rm -rf ~/.cache/yay
 rm -rf ~/.config/yay
 sudo pacman -Rns --noconfirm $(pacman -Qdtq)
