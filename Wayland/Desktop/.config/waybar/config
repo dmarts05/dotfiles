@@ -1,0 +1,149 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    // "width": 2560, // Waybar width
+    "spacing": 15,
+    // Choose the order of the modules
+    "modules-left": [
+        "hyprland/workspaces",
+        "tray"
+    ],
+    "modules-center": [],
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "clock"
+    ],
+    // Modules configuration
+    "hyprland/workspaces": {
+        "format": "{icon} {name}",
+        "format-icons": {
+            "active": "",
+            "default": ""
+        },
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "on-click": "activate"
+    },
+    "custom/power": {
+        "format": ""
+    },
+    "custom/music": {
+        "format": "  {}",
+        "escape": true,
+        "interval": 1,
+        "tooltip": true,
+        "exec": "playerctl metadata --format='{{ title }} | {{ artist }}'",
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous",
+        "max-length": 35
+    },
+    "hyprland/window": {
+        "format": "{}",
+        "separate-outputs": true,
+        "max-length": 35
+    },
+    "tray": {
+        "icon-size": 15,
+        "spacing": 15
+    },
+    "clock": {
+        "format": " {:%d/%m/%y | %R}",
+        "format-alt": " {:%A, %B %d, %Y | %T}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "interval": 1
+    },
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": true,
+        "interval": 1
+    },
+    "disk": {
+        "format": "{used}/{total} ",
+        "tooltip": true,
+        "interval": 1
+    },
+    "memory": {
+        "format": "{}% ",
+        "tooltip": true,
+        "interval": 1
+    },
+    "temperature": {
+        "critical-threshold": 40,
+        "format-critical": "{temperatureC}°C {icon}",
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": [
+            "",
+            "",
+            ""
+        ],
+        "tooltip": true,
+        "interval": 1
+    },
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": [
+            "",
+            "盛"
+        ],
+        "on-scroll-up": "light -A 5",
+        "on-scroll-down": "light -U 5",
+        "interval": 1
+    },
+    "battery": {
+        "states": {
+            "good": 100,
+            "warning": 40,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": "  {capacity}%",
+        "format-alt": "{icon} {time}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": [
+            " ",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "interval": 1
+    },
+    "network": {
+        // "interface": "eth0", // (Optional) To force the use of this interface
+        "format-wifi": "  {essid} ({signalStrength}%)",
+        "format-ethernet": " {ipaddr}/{cidr}",
+        "tooltip-format": " {ifname} via {gwaddr}",
+        "format-linked": " {ifname} (No IP)",
+        "format-disconnected": "⚠ Disconnected",
+        // "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-alt": " {bandwidthUpBytes} |  {bandwidthDownBytes}",
+        "interval": 1
+    },
+    "pulseaudio": {
+        "scroll-step": 1,
+        "format": "{icon} {volume}% {format_source}",
+        "format-bluetooth": "{icon} {volume}% {format_source}",
+        "format-bluetooth-muted": "{icon}  {format_source}",
+        "format-muted": "  {format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": " ",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": " ",
+            "default": [
+                "",
+                "",
+                " "
+            ]
+        },
+        "on-click": "pavucontrol"
+    },
+}
