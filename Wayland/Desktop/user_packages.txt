@@ -9,6 +9,7 @@ catppuccin-gtk-theme-mocha
 curl
 dnsmasq
 firefox
+fd
 fzf
 gimp
 git
@@ -50,9 +51,11 @@ playerctl
 pnpm
 python-pip
 python-poetry
+python-neovim
 qbittorrent
 qt5ct
 qt6ct
+ripgrep
 rust
 sddm
 sddm-theme-catppuccin-git
@@ -67,6 +70,7 @@ timeshift-autosnap
 timeshift-bin
 tofi
 tree
+tree-sitter
 udiskie
 ufw
 unrar

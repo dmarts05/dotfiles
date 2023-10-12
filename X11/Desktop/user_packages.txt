@@ -11,6 +11,7 @@ catppuccin-gtk-theme-mocha
 curl
 discord
 dnsmasq
+fd
 flameshot
 fzf
 gimp
@@ -56,10 +57,12 @@ polkit
 polkit-gnome
 python-pip
 python-poetry
+python-neovim
 qbittorrent
 qt5ct
 qt6ct
 redshift
+ripgrep
 rofi
 rust
 seahorse
@@ -71,6 +74,7 @@ timeshift-autosnap
 timeshift-bin
 traceroute
 tree
+tree-sitter
 udisks2
 ufw
 vde2
