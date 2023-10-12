@@ -28,6 +28,7 @@ i3lock
 kdenlive
 kvantum
 kvantum-theme-catppuccin-git
+lazygit
 libguestfs
 light
 lightdm
