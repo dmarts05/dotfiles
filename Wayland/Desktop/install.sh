@@ -111,10 +111,6 @@ sudo usermod -aG video,audio,lp,scanner $USER
 echo "[INFO] Installing NVIDIA packages..."
 nvidia-inst
 
-# Install LunarVim
-echo "[INFO] Installing LunarVim..."
-LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
-
 # Clean up
 echo "[INFO] Cleaning up..."
 sudo pacman -Rns --noconfirm yay xterm
