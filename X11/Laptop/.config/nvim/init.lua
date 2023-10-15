@@ -21,6 +21,13 @@ plugins = {
                 -- Configuration here, or leave empty to use defaults
             })
         end
+    },
+    {
+        'numToStr/Comment.nvim',
+        opts = {
+            -- add any options here
+        },
+        lazy = false,
     }
 }
 
