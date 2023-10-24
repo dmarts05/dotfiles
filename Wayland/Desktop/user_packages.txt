@@ -1,5 +1,6 @@
 alacritty
 audacity
+azuredatastudio-bin
 base-devel
 blueman
 bridge-utils
@@ -43,6 +44,7 @@ npm
 nvidia-inst
 nwg-look-bin
 obs-studio
+obsidian
 openvpn
 papirus-folders-catppuccin-git
 papirus-icon-theme

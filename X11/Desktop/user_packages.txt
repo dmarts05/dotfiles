@@ -1,9 +1,9 @@
 alacritty
 audacity
 awesome
+azuredatastudio-bin
 base-devel
 blueman
-brave-bin
 bridge-utils
 btop
 catppuccin-cursors-mocha
@@ -45,6 +45,7 @@ noto-fonts-emoji
 npm
 nvidia-inst
 obs-studio
+obsidian
 onlyoffice-bin
 openbsd-netcat
 openvpn
@@ -68,6 +69,7 @@ rust
 seahorse
 spotify
 telegram-desktop
+thorium-browser-bin
 thunar
 thunar-archive-plugin
 timeshift-autosnap
