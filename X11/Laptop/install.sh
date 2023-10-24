@@ -110,6 +110,11 @@ sudo cp -r src/* /usr/share/icons/Papirus
 ./papirus-folders -C cat-mocha-mauve --theme Papirus-Dark
 cd .. && rm -rf papirus-folders
 
+# Set up Poetry
+echo "[INFO] Setting up Poetry..."
+poetry config virtualenvs.in-project true
+poetry config virtualenvs.prefer-active-python true
+
 # Install auto-cpufreq
 echo "[INFO] Enabling auto-cpufreq..."
 sudo systemctl enable --now auto-cpufreq

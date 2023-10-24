@@ -102,6 +102,11 @@ sudo usermod -aG vboxusers $USER
 echo "[INFO] Setting up Papirus folders..."
 papirus-folders -C cat-mocha-mauve --theme Papirus-Dark
 
+# Set up Poetry
+echo "[INFO] Setting up Poetry..."
+poetry config virtualenvs.in-project true
+poetry config virtualenvs.prefer-active-python true
+
 # Set up ZSH, Oh My ZSH, Powerlevel10k and ZSH plugins
 echo "[INFO] Setting up ZSH, Oh My ZSH, Powerlevel10k and ZSH plugins..."
 echo "[INFO] Please, exit ZSH when the installation is finished."
