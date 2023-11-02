@@ -75,7 +75,7 @@ thorium-browser-bin
 thunar
 thunar-archive-plugin
 timeshift-autosnap
-timeshift-bin
+timeshift
 traceroute
 tree
 tree-sitter
