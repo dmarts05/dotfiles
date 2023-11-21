@@ -6,5 +6,8 @@ killall pa-applet && killall nm-applet && killall polkit-gnome-authentication-ag
 # Start systray icons, polkit and lock
 sleep 0.5 && (pa-applet & nm-applet --indicator & /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & xss-lock i3lock &)
 
-# Rerun pa-applet if it crashes
-sleep 3 && if ! pgrep -x "pa-applet" > /dev/null; then pa-applet & fi
+# Loop to keep running pa-applet until it works
+while ! pgrep -x "pa-applet" > /dev/null; do
+    pa-applet &
+    sleep 0.5
+done
