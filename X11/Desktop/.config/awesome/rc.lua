@@ -371,7 +371,7 @@ end, {
     group = "application"
 }), -- Browser
 awful.key({modkey}, "b", function()
-    awful.util.spawn("brave")
+    awful.util.spawn("thorium-browser")
 end, {
     description = "run browser",
     group = "application"
