@@ -4,7 +4,7 @@
 IMAGE="$HOME/.config/wallpapers/wallpaper.png"
 
 # Colors
-bg='1e1e2e'		bgl='313244'		fg='d9e0ee'
+bg='000000'		bgl='313244'		fg='d9e0ee'
 red='f38ba8'	green='a6e3a1'		yellow='f9e2af'
 blue='89b4fa'	magenta='cba6f7'	cyan='89dceb'
 alpha='00000000'
@@ -19,7 +19,7 @@ swaylock -f \
 	--indicator-caps-lock \
 	\
 	`# Appearance` \
-	--color ${bg}E6 \
+	--color ${bg}A2 \
 	`#--image ${IMAGE} --scaling fill` \
 	--font 'JetBrainsMono Nerd Font' --font-size 18 \
 	\

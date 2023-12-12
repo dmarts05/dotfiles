@@ -10,6 +10,7 @@ catppuccin-gtk-theme-mocha
 curl
 dnsmasq
 fd
+feh
 firefox
 fzf
 gimp
@@ -22,7 +23,7 @@ grim
 grim
 grub-btrfs
 gvfs
-hyprland-nvidia
+hyprland
 hyprpicker
 hyprshot
 kdenlive
@@ -31,7 +32,9 @@ kvantum-theme-catppuccin-git
 lazygit
 libguestfs
 libreoffice-fresh
+libva-nvidia-driver-git
 light
+mako
 mpv
 neovim
 network-manager-applet
@@ -63,6 +66,7 @@ sddm-theme-catppuccin-git
 seahorse
 spotify
 swaybg
+swayidle
 swaylock
 telegram-desktop
 thunar
@@ -120,6 +124,7 @@ ttf-tinos-nerd
 ttf-ubuntu-mono-nerd
 ttf-ubuntu-nerd
 ttf-victor-mono-nerd
+tumbler
 udiskie
 ufw
 unrar
@@ -136,11 +141,9 @@ wl-clipboard
 wlogout
 xarchiver
 xdg-desktop-portal
-xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
 xfce4-settings
 xfce-polkit
 yad
-zapzap
 zip
 zsh

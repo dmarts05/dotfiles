@@ -112,6 +112,12 @@ cp .p10k.zsh ~/.p10k.zsh
 echo "[INFO] Setting common groups for the user..."
 sudo usermod -aG video,audio,lp,scanner $USER
 
+# Enable NVIDIA suspend/wakeup
+sudo cp ./etc/modprobe.d/nvidia-power-management.conf /etc/modprobe.d/nvidia-power-management.conf
+sudo systemctl enable nvidia-suspend 
+sudo systemctl enable nvidia-hibernate 
+sudo systemctl enable nvidia-resume 
+
 # Perform nvdia-install to install remaining NVIDIA packages
 echo "[INFO] Installing NVIDIA packages..."
 nvidia-inst
