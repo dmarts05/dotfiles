@@ -3,6 +3,7 @@ audacity
 azuredatastudio-bin
 base-devel
 blueman
+brave-bin
 bridge-utils
 btop
 catppuccin-cursors-mocha
@@ -11,8 +12,8 @@ curl
 dnsmasq
 fd
 feh
-firefox
 fzf
+gammastep
 gimp
 git
 glib2
