@@ -3,7 +3,7 @@
 GRUB_DEFAULT='0'
 GRUB_TIMEOUT='1'
 GRUB_DISTRIBUTOR='EndeavourOS'
-GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog nvme_load=YES resume=UUID=b92b5f1e-0de4-44c9-860e-02e040376902 nvidia-drm.modeset=1 loglevel=3'
+GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog nvme_load=YES nvidia-drm.modeset=1 loglevel=3'
 GRUB_CMDLINE_LINUX=""
 
 # Preload both GPT and MBR modules so that they are not missed
