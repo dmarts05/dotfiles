@@ -25,6 +25,7 @@ grim
 grub-btrfs
 gvfs
 hyprland
+hyprpaper
 hyprpicker
 hyprshot
 kdenlive
@@ -66,7 +67,6 @@ sddm
 sddm-theme-catppuccin-git
 seahorse
 spotify
-swaybg
 swayidle
 swaylock
 telegram-desktop
