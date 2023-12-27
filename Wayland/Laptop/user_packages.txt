@@ -129,13 +129,13 @@ udiskie
 ufw
 unrar
 unzip
+vencord-desktop-bin
 vim
 virtualbox
 virtualbox-guest-iso
 virtualbox-host-modules-arch
 visual-studio-code-bin
 waybar
-webcord-bin
 wget
 wl-clipboard
 wlogout

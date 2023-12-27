@@ -5,11 +5,11 @@
     "spacing": 15,
     // Choose the order of the modules
     "modules-left": [
-        "hyprland/workspaces",
-        "tray"
+        "hyprland/workspaces"
     ],
     "modules-center": [],
     "modules-right": [
+        "tray",
         "pulseaudio",
         "backlight",
         "battery",
