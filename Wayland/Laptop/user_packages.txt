@@ -1,4 +1,5 @@
 alacritty
+armcord-bin
 audacity
 auto-cpufreq
 azuredatastudio-bin
@@ -129,7 +130,6 @@ udiskie
 ufw
 unrar
 unzip
-vencord-desktop-bin
 vim
 virtualbox
 virtualbox-guest-iso
