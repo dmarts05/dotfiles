@@ -67,7 +67,7 @@ rust
 sddm
 sddm-theme-catppuccin-git
 seahorse
-spotify
+spotify-adblock
 swayidle
 swaylock
 telegram-desktop
