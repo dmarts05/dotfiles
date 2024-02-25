@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Background Image
-IMAGE="$HOME/.config/wallpapers/wallpaper.png"
-
 # Colors
 bg='000000'		bgl='313244'		fg='d9e0ee'
 red='f38ba8'	green='a6e3a1'		yellow='f9e2af'
@@ -21,7 +18,7 @@ swaylock -f \
 	`# Appearance` \
 	--color ${bg}A2 \
 	`#--image ${IMAGE} --scaling fill` \
-	--font 'JetBrainsMono Nerd Font' --font-size 18 \
+	--font 'JetBrainsMono Nerd Font' --font-size 72 \
 	\
 	`# Backspace Key` \
 	--key-hl-color ${green} \
@@ -67,4 +64,10 @@ swaylock -f \
 	--text-clear-color ${fg} \
 	--text-caps-lock-color ${fg} \
 	--text-ver-color ${bg} \
-	--text-wrong-color ${bg}
+	--text-wrong-color ${bg} \
+	\
+	`# Effects` \
+	--screenshots \
+	--effect-blur 7x5 \
+	--clock \
+	--indicator \

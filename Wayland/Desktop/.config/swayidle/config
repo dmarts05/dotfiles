@@ -1,3 +1,0 @@
-timeout 900 'sh ~/.config/hypr/scripts/lockscreen'
-timeout 900 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
-before-sleep 'sh ~/.config/hypr/scripts/lockscreen'

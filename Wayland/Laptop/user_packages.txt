@@ -26,6 +26,7 @@ grim
 grim
 grub-btrfs
 gvfs
+hypridle
 hyprland
 hyprpaper
 hyprpicker
@@ -67,8 +68,7 @@ sddm
 sddm-theme-catppuccin-git
 seahorse
 spotify-adblock
-swayidle
-swaylock
+swaylock-effects
 telegram-desktop
 thunar
 thunar-archive-plugin
