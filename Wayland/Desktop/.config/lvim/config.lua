@@ -1,7 +1,28 @@
 ------------------------
+-- General
+------------------------
+-- Wrap lines
+vim.opt.wrap = true
+
+-- Disable breadcrumbs
+lvim.builtin.breadcrumbs.active = false
+
+-- Disable next line comment when pressing Enter or o
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "*",
+	callback = function()
+		vim.opt_local.formatoptions:remove({ "r", "o" })
+	end,
+})
+
+------------------------
 -- Plugins
 ------------------------
 lvim.plugins = {
+	-- Mason Tool Installer
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+	},
 	-- Coloscheme
 	{
 		"catppuccin/nvim",
@@ -23,13 +44,6 @@ lvim.plugins = {
 	"olexsmir/gopher.nvim",
 	"leoluz/nvim-dap-go",
 }
-
-------------------------
--- General
-------------------------
-lvim.builtin.dap.active = true
--- Wrap lines
-vim.opt.wrap = true
 
 ------------------------
 -- Copilot
@@ -64,12 +78,42 @@ lvim.colorscheme = "catppuccin-mocha"
 lvim.builtin.lualine.options.theme = "catppuccin"
 
 ------------------------
+-- Mason Tool Installer
+------------------------
+local mason_tool_installer = require("mason-tool-installer")
+mason_tool_installer.setup({
+	ensure_installed = {
+		"delve",
+		"gofumpt",
+		"goimports",
+		"golangci-lint-langserver",
+		"gomodifytags",
+		"gopls",
+		"gotests",
+		"impl",
+		"ruff_lsp",
+		"staticcheck",
+		"stylua",
+		"tsserver",
+		"tailwindcss",
+	},
+})
+
+------------------------
 -- Treesitter
 ------------------------
 lvim.builtin.treesitter.ensure_installed = {
 	"go",
 	"gomod",
 	"lua",
+	"python",
+	"typescript",
+	"javascript",
+	"json",
+	"yaml",
+	"html",
+	"css",
+	"tsx",
 }
 
 ------------------------
@@ -105,13 +149,12 @@ dapgo.setup()
 ------------------------
 -- LSP
 ------------------------
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "gopls" })
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "gopls", "pyright" })
+lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+	return server ~= "ruff_lsp"
+end, lvim.lsp.automatic_configuration.skipped_servers)
 
 local lsp_manager = require("lvim.lsp.manager")
-lsp_manager.setup("golangci_lint_langserver", {
-	on_init = require("lvim.lsp").common_on_init,
-	capabilities = require("lvim.lsp").common_capabilities(),
-})
 
 lsp_manager.setup("gopls", {
 	on_attach = function(client, bufnr)
