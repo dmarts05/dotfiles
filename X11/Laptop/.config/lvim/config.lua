@@ -99,6 +99,7 @@ mason_tool_installer.setup({
 		"isort",
 		"pyright",
 	},
+	auto_update = true,
 })
 
 ------------------------
@@ -126,6 +127,8 @@ formatters.setup({
 	{ name = "stylua", filetypes = { "lua" } },
 	{ command = "goimports", filetypes = { "go" } },
 	{ command = "gofumpt", filetypes = { "go" } },
+	{ command = "black", filetypes = { "python" } },
+	{ command = "isort", filetypes = { "python" } },
 	{ command = "black", filetypes = { "python" } },
 	{ command = "isort", filetypes = { "python" } },
 })
