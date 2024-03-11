@@ -91,11 +91,13 @@ mason_tool_installer.setup({
 		"gopls",
 		"gotests",
 		"impl",
-		"ruff_lsp",
 		"staticcheck",
 		"stylua",
 		"tsserver",
 		"tailwindcss",
+		"black",
+		"isort",
+		"pyright",
 	},
 })
 
@@ -124,6 +126,8 @@ formatters.setup({
 	{ name = "stylua", filetypes = { "lua" } },
 	{ command = "goimports", filetypes = { "go" } },
 	{ command = "gofumpt", filetypes = { "go" } },
+	{ command = "black", filetypes = { "python" } },
+	{ command = "isort", filetypes = { "python" } },
 })
 
 lvim.format_on_save = true
@@ -149,10 +153,7 @@ dapgo.setup()
 ------------------------
 -- LSP
 ------------------------
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "gopls", "pyright" })
-lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
-	return server ~= "ruff_lsp"
-end, lvim.lsp.automatic_configuration.skipped_servers)
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "gopls" })
 
 local lsp_manager = require("lvim.lsp.manager")
 
@@ -188,6 +189,19 @@ lsp_manager.setup("gopls", {
 				gc_details = true,
 				test = true,
 				tidy = true,
+			},
+		},
+	},
+})
+
+lsp_manager.setup("pyright", {
+	on_attach = require("lvim.lsp").common_on_attach,
+	on_init = require("lvim.lsp").common_on_init,
+	capabilities = require("lvim.lsp").common_capabilities(),
+	settings = {
+		python = {
+			analysis = {
+				typeCheckingMode = "strict",
 			},
 		},
 	},
