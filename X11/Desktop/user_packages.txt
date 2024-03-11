@@ -26,6 +26,7 @@ gvfs
 i3lock
 kdenlive
 kvantum
+kvantum-qt5
 kvantum-theme-catppuccin-git
 lazygit
 libguestfs
