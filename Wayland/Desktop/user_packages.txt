@@ -79,6 +79,7 @@ timeshift-autosnap
 tofi
 tree
 tree-sitter
+tree-sitter-cli
 ttf-3270-nerd
 ttf-agave-nerd
 ttf-anonymouspro-nerd
