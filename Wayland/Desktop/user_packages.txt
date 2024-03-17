@@ -75,7 +75,6 @@ telegram-desktop
 thunar
 thunar-archive-plugin
 timeshift
-timeshift-autosnap
 tofi
 tree
 tree-sitter
