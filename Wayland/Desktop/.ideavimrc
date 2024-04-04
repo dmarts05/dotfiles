@@ -32,10 +32,9 @@ nmap <leader>f :action GotoFile<CR>
 
 nmap <leader>r :action Run<CR>
 nmap <leader>ds :action Debug<CR>
-namp <leader>dS :action Stop<CR>
-nmap <leader>dr :action Rerun<CR>
+namp <leader>dd :action Stop<CR>
 nmap <leader>dt :action ToggleLineBreakpoint<CR>
-nmap <leader>dc :action Continue<CR>
+nmap <leader>dc :action Resume<CR>
 nmap <leader>dn :action StepOver<CR>
 nmap <leader>di :action StepInto<CR>
 nmap <leader>do :action StepOut<CR>
