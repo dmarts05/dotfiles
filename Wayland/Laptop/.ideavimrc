@@ -23,15 +23,22 @@ nnoremap <c-i> :action Forward<cr>
 nmap <leader>c :action CloseContent<CR>
 nmap <leader>bb :action PreviousTab<CR>
 nmap <leader>bn :action NextTab<CR>
-nmap - :action SplitHorizontally<CR>
-nmap <bar> :action SplitVertically<CR>
+nmap <leader>wh :action SplitHorizontally<CR>
+nmap <leader>wv :action SplitVertically<CR>
 
 nmap <leader>p :action SearchEverywhere<CR>
+nmap <leader>s :action SearchEverywhere<CR>
 nmap <leader>f :action GotoFile<CR>
 
 nmap <leader>r :action Run<CR>
 nmap <leader>ds :action Debug<CR>
+namp <leader>dS :action Stop<CR>
+nmap <leader>dr :action Rerun<CR>
 nmap <leader>dt :action ToggleLineBreakpoint<CR>
+nmap <leader>dc :action Continue<CR>
+nmap <leader>dn :action StepOver<CR>
+nmap <leader>di :action StepInto<CR>
+nmap <leader>do :action StepOut<CR>
 
 " Handlers
 sethandler <C-2> a:vim
