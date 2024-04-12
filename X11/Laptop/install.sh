@@ -35,13 +35,9 @@ sudo cp ./etc/makepkg.conf /etc/makepkg.conf
 echo "[INFO] Installing packages from user_packages.txt..."
 paru -S --noconfirm --needed - < user_packages.txt
 
-# Enable lightdm
-echo "[INFO] Enabling lightdm..."
-sudo systemctl enable lightdm
-
-# Add lightdm extra configuration
-echo "[INFO] Adding lightdm extra configuration..."
-sudo cp ./etc/lightdm/lightdm-gtk-greeter.conf /etc/lightdm/
+# Enable ly
+echo "[INFO] Enabling ly..."
+sudo systemctl enable ly
 
 # Enable CUPS
 echo "[INFO] Enabling CUPS..."

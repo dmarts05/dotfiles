@@ -32,10 +32,8 @@ kvantum-theme-catppuccin-git
 lazygit
 libguestfs
 light
-lightdm
-lightdm-gtk-greeter
-lightdm-gtk-greeter-settings
 lxappearance
+ly
 mpv
 neovim
 network-manager-applet
