@@ -1,7 +1,6 @@
 alacritty
 armcord-bin
 audacity
-azuredatastudio-bin
 base-devel
 blueman
 brave-bin
@@ -30,6 +29,7 @@ hyprland
 hyprpaper
 hyprpicker
 hyprshot
+jdk21-openjdk
 kdenlive
 kvantum
 kvantum-qt5
@@ -50,7 +50,6 @@ noto-fonts-emoji
 npm
 nvidia-inst
 nwg-look-bin
-obsidian
 obs-studio
 openvpn
 papirus-folders-catppuccin-git
