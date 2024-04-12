@@ -30,6 +30,7 @@ hyprland
 hyprpaper
 hyprpicker
 hyprshot
+intellij-idea-ultimate-edition
 jdk21-openjdk
 kdenlive
 kvantum

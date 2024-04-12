@@ -23,6 +23,7 @@ grim
 grub-btrfs
 gvfs
 i3lock
+intellij-idea-ultimate-edition
 jdk21-openjdk
 kdenlive
 kvantum
@@ -50,6 +51,7 @@ onlyoffice-bin
 openvpn
 papirus-folders-catppuccin-git
 papirus-icon-theme
+pfetch-rs-bin
 playerctl
 pnpm
 python-neovim
