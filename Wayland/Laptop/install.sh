@@ -112,6 +112,12 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 cp .zshrc ~/.zshrc
 cp .p10k.zsh ~/.p10k.zsh
 
+# Set up LunarVim
+echo "[INFO] Setting up LunarVim..."
+LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
+rm -rf ~/.config/lvim
+git clone https://github.com/dmarts05/lvim.git ~/.config/lvim
+
 # Set common groups for the user
 echo "[INFO] Setting common groups for the user..."
 sudo usermod -aG video,audio,lp,scanner $USER
