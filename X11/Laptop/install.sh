@@ -98,14 +98,6 @@ sudo usermod -aG vboxusers $USER
 echo "[INFO] Setting up Papirus folders..."
 papirus-folders -C cat-mocha-mauve --theme Papirus-Dark
 
-# Set up Papirus folders
-echo "[INFO] Setting up Papirus folders..."
-git clone https://github.com/catppuccin/papirus-folders.git
-cd papirus-folders
-sudo cp -r src/* /usr/share/icons/Papirus
-./papirus-folders -C cat-mocha-mauve --theme Papirus-Dark
-cd .. && rm -rf papirus-folders
-
 # Set up Poetry
 echo "[INFO] Setting up Poetry..."
 poetry config virtualenvs.in-project true
@@ -113,7 +105,7 @@ poetry config virtualenvs.prefer-active-python true
 
 # Enable auto-cpufreq
 echo "[INFO] Enabling auto-cpufreq..."
-sudo systemctl enable --now auto-cpufreq
+sudo auto-cpufreq --install
 
 # Set up ZSH, Oh My ZSH, Powerlevel10k and ZSH plugins
 echo "[INFO] Setting up ZSH, Oh My ZSH, Powerlevel10k and ZSH plugins..."

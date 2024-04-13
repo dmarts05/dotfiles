@@ -1,4 +1,6 @@
+acpi
 alacritty
+arc-icon-theme
 armcord-bin
 audacity
 auto-cpufreq
@@ -65,6 +67,7 @@ rust
 seahorse
 spotify-adblock
 telegram-desktop
+thorium-browser-bin
 thunar
 thunar-archive-plugin
 timeshift

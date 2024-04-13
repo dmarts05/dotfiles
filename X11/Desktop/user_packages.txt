@@ -35,7 +35,6 @@ kvantum-qt5
 kvantum-theme-catppuccin-git
 lazygit
 libguestfs
-light
 lxappearance
 ly
 mpv
@@ -68,6 +67,7 @@ rust
 seahorse
 spotify-adblock
 telegram-desktop
+thorium-browser-bin
 thunar
 thunar-archive-plugin
 timeshift

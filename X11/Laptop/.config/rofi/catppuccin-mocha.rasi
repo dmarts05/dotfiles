@@ -9,7 +9,7 @@
     grey: #6c7086;
 
     width: 600;
-    font: "Noto Sans 12";
+    font: "Noto Sans 16";
 }
 
 element-text, element-icon , mode-switcher {
