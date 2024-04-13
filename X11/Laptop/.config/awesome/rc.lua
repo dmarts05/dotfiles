@@ -239,6 +239,7 @@ awful.screen.connect_for_each_screen(function(s)
 					type = "arc",
 					program = "light",
 					base = 50,
+					timeout = 60,
 				}),
 				horizontal_spacing,
 				horizontal_spacing,
@@ -257,7 +258,12 @@ awful.screen.connect_for_each_screen(function(s)
 				vertical_spacing
 			),
 			wibox.layout.margin(
-				batteryarc_widget({ size = widget_size, show_current_level = true, notification_position = "top_right" }),
+				batteryarc_widget({
+					size = widget_size,
+					show_current_level = true,
+					notification_position = "top_right",
+					timeout = 60,
+				}),
 				horizontal_spacing,
 				horizontal_spacing,
 				vertical_spacing,
@@ -373,13 +379,13 @@ local globalkeys = gears.table.join( -- Master and column manipulation
 		group = "hotkeys",
 	}),
 	awful.key({}, "XF86AudioRaiseVolume", function()
-		volume_widget:inc()
+		volume_widget:inc(1)
 	end, {
 		description = "volume up",
 		group = "hotkeys",
 	}),
 	awful.key({}, "XF86AudioLowerVolume", function()
-		volume_widget:dec()
+		volume_widget:dec(1)
 	end, {
 		description = "volume down",
 		group = "hotkeys",
