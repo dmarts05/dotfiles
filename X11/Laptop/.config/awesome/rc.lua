@@ -250,7 +250,7 @@ awful.screen.connect_for_each_screen(function(s)
 				volume_widget({
 					step = 5,
 					widget_type = "arc",
-					size = widget_size,
+					size = widget_size - 6,
 				}),
 				horizontal_spacing,
 				horizontal_spacing,
