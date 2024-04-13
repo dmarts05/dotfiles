@@ -10,7 +10,10 @@ btop
 catppuccin-cursors-mocha
 catppuccin-gtk-theme-mocha
 curl
+datagrip
 dnsmasq
+docker
+docker-compose
 fd
 feh
 fzf
@@ -21,7 +24,6 @@ glib2
 gnome-keyring
 go
 gparted
-grim
 grim
 grub-btrfs
 gvfs

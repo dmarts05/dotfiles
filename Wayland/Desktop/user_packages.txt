@@ -9,7 +9,10 @@ btop
 catppuccin-cursors-mocha
 catppuccin-gtk-theme-mocha
 curl
+datagrip
 dnsmasq
+docker
+docker-compose
 fd
 feh
 fzf
@@ -21,7 +24,6 @@ gnome-keyring
 go
 gparted
 grim
-grim
 grub-btrfs
 gvfs
 hypridle
@@ -29,6 +31,7 @@ hyprland
 hyprpaper
 hyprpicker
 hyprshot
+intellij-idea-ultimate-edition
 jdk21-openjdk
 kdenlive
 kvantum

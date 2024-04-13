@@ -118,6 +118,11 @@ git clone https://github.com/dmarts05/lvim.git ~/.config/lvim
 echo "[INFO] Setting common groups for the user..."
 sudo usermod -aG video,audio,lp,scanner $USER
 
+# Configure docker
+echo "[INFO] Configuring docker..."
+sudo systemctl enable docker.socket
+sudo usermod -aG docker $USER
+
 # Enable NVIDIA suspend/wakeup
 sudo cp ./etc/modprobe.d/nvidia-power-management.conf /etc/modprobe.d/nvidia-power-management.conf
 sudo systemctl enable nvidia-suspend 

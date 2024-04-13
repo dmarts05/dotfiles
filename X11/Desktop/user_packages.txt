@@ -1,6 +1,7 @@
 alacritty
 armcord-bin
 audacity
+awesome
 base-devel
 blueman
 brave-bin
@@ -9,7 +10,10 @@ btop
 catppuccin-cursors-mocha
 catppuccin-gtk-theme-mocha
 curl
+datagrip
 dnsmasq
+docker
+docker-compose
 fd
 feh
 fzf
@@ -43,7 +47,6 @@ nodejs
 noto-fonts-emoji
 npm
 nvidia-inst
-obsidian
 obs-studio
 onlyoffice-bin
 openvpn

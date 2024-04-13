@@ -2,6 +2,7 @@ alacritty
 armcord-bin
 audacity
 auto-cpufreq
+awesome
 base-devel
 blueman
 bridge-utils
@@ -9,7 +10,10 @@ btop
 catppuccin-cursors-mocha
 catppuccin-gtk-theme-mocha
 curl
+datagrip
 dnsmasq
+docker
+docker-compose
 fd
 feh
 fzf
@@ -23,6 +27,7 @@ grim
 grub-btrfs
 gvfs
 i3lock
+intellij-idea-ultimate-edition
 kdenlive
 kvantum
 kvantum-qt5
