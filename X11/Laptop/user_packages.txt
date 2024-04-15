@@ -1,7 +1,6 @@
 acpi
 alacritty
 arc-icon-theme
-armcord-bin
 audacity
 auto-cpufreq
 awesome
@@ -13,6 +12,7 @@ catppuccin-cursors-mocha
 catppuccin-gtk-theme-mocha
 curl
 datagrip
+discord
 dnsmasq
 docker
 docker-compose

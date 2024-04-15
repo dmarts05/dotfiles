@@ -446,7 +446,7 @@ local globalkeys = gears.table.join( -- Master and column manipulation
 		group = "application",
 	}), -- Discord
 	awful.key({ modkey }, "d", function()
-		awful.util.spawn("armcord")
+		awful.util.spawn("discord")
 	end, {
 		description = "run discord",
 		group = "application",
