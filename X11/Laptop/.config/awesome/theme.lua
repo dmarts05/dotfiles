@@ -113,6 +113,8 @@ theme.menu_width = 180
 theme.menu_submenu_icon = nil
 theme.menu_submenu = "▸ "
 
+theme.notification_fg = "#ffffffff"
+
 -- Recolor Layout icons:
 theme = theme_assets.recolor_layout(theme, theme.wibar_fg)
 
