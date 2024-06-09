@@ -20,30 +20,10 @@ local function GET_VOLUME_CMD(card, device, mixctrl, value_type)
 	return "amixer -c " .. card .. " -D " .. device .. " sget " .. mixctrl .. " " .. value_type
 end
 local function INC_VOLUME_CMD(card, device, mixctrl, value_type, step)
-	return "amixer -c "
-		.. card
-		.. " -D "
-		.. device
-		.. " sset "
-		.. mixctrl
-		.. " "
-		.. value_type
-		.. " "
-		.. step
-		.. "%+"
+	return "amixer -c " .. card .. " -D " .. device .. " sset " .. mixctrl .. " " .. value_type .. " " .. step .. "%+"
 end -- luacheck: ignore
 local function DEC_VOLUME_CMD(card, device, mixctrl, value_type, step)
-	return "amixer -c "
-		.. card
-		.. " -D "
-		.. device
-		.. " sset "
-		.. mixctrl
-		.. " "
-		.. value_type
-		.. " "
-		.. step
-		.. "%-"
+	return "amixer -c " .. card .. " -D " .. device .. " sset " .. mixctrl .. " " .. value_type .. " " .. step .. "%-"
 end -- luacheck: ignore
 local function TOG_VOLUME_CMD(card, device, mixctrl)
 	return "amixer -c " .. card .. " -D " .. device .. " sset " .. mixctrl .. " toggle"
@@ -96,12 +76,9 @@ local function build_rows(devices, on_checkbox_click, device_type)
 		})
 
 		checkbox:connect_signal("button::press", function()
-			spawn.easy_async(
-				string.format([[sh -c 'pacmd set-default-%s "%s"']], device_type, device.name),
-				function()
-					on_checkbox_click()
-				end
-			)
+			spawn.easy_async(string.format([[sh -c 'pacmd set-default-%s "%s"']], device_type, device.name), function()
+				on_checkbox_click()
+			end)
 		end)
 
 		local row = wibox.widget({
@@ -159,12 +136,9 @@ local function build_rows(devices, on_checkbox_click, device_type)
 		end)
 
 		row:connect_signal("button::press", function()
-			spawn.easy_async(
-				string.format([[sh -c 'pacmd set-default-%s "%s"']], device_type, device.name),
-				function()
-					on_checkbox_click()
-				end
-			)
+			spawn.easy_async(string.format([[sh -c 'pacmd set-default-%s "%s"']], device_type, device.name), function()
+				on_checkbox_click()
+			end)
 		end)
 
 		table.insert(device_rows, row)
@@ -233,7 +207,7 @@ local function worker(user_args)
 	end
 
 	local function update_graphic(widget, stdout)
-		local mute = string.match(stdout, "%[(o%D%D?)%]") -- \[(o\D\D?)\] - [on] or [off]
+		local mute = stdout:match("%[off%]") and "off" or stdout:match("%[on%]") and "on" or "unknown"
 		if mute == "off" then
 			widget:mute()
 		elseif mute == "on" then

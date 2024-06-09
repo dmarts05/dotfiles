@@ -1,3 +1,11 @@
+-- Add line numbers
+vim.opt.number = true
+vim.opt.relativenumber = false
+
+-- Use system clipboard for yank, delete, change, and put operations
+vim.opt.clipboard = "unnamedplus"
+
+-- Lazy.nvim setup
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -11,6 +19,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Plugin configuration
 plugins = {
     {
         "kylechui/nvim-surround",
@@ -28,13 +37,20 @@ plugins = {
             -- add any options here
         },
         lazy = false,
-    }
+    },
+    {
+        "catppuccin/nvim",
+        as = "catppuccin",
+        config = function()
+            require("catppuccin").setup({
+                flavour = "mocha", -- Set the flavor to mocha
+            })
+            vim.cmd("colorscheme catppuccin")
+        end,
+        lazy = false,
+    },
 }
 
 opts = {}
 
 require("lazy").setup(plugins, opts)
-
-if vim.g.vscode then
-    vim.cmd [[source $HOME/.config/nvim/vscode/settings.vim]]
-end

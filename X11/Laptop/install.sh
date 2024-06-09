@@ -60,11 +60,13 @@ sudo cp ./etc/environment /etc/environment
 echo "[INFO] Adding PAM config for automatically unlocking keyring..."
 sudo cp ./etc/pam.d/login /etc/pam.d/login
 
-# Add fonts and images
-echo "[INFO] Adding fonts and images..."
+# Add fonts, images, themes and icons
+echo "[INFO] Adding fonts, images, themes and icons..."
 sudo mkdir -p /usr/share/fonts /usr/share/icons /usr/share/themes /usr/share/images
 sudo cp -r ./usr/share/fonts/* /usr/share/fonts/
 sudo cp -r ./usr/share/images/* /usr/share/images/
+sudo cp -r ./usr/share/icons/* /usr/share/icons/
+sudo cp -r ./usr/share/themes/* /usr/share/themes/
 
 # Create directories
 echo "[INFO] Creating directories..."
@@ -117,12 +119,6 @@ git clone https://github.com/catppuccin/zsh-syntax-highlighting.git ${ZSH_CUSTOM
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 cp .zshrc ~/.zshrc
 cp .p10k.zsh ~/.p10k.zsh
-
-# Set up LunarVim
-echo "[INFO] Setting up LunarVim..."
-LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
-rm -rf ~/.config/lvim
-git clone https://github.com/dmarts05/lvim.git ~/.config/lvim
 
 # Set common groups for the user
 echo "[INFO] Setting common groups for the user..."

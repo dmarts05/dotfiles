@@ -8,8 +8,6 @@ base-devel
 blueman
 bridge-utils
 btop
-catppuccin-cursors-mocha
-catppuccin-gtk-theme-mocha
 curl
 datagrip
 discord
