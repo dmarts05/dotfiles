@@ -1,3 +1,5 @@
+Plug 'vim-scripts/argtextobj.vim'
+
 set clipboard=unnamedplus,unnamed,ideaput " Integrate with system clipboard
 set hlsearch " Highlight search occurrences
 set ignorecase " Ignore case in search patterns
@@ -23,6 +25,7 @@ nnoremap <c-i> :action Forward<cr>
 nmap <leader>c :action CloseContent<CR>
 nmap <leader>bb :action PreviousTab<CR>
 nmap <leader>bn :action NextTab<CR>
+nmap <leader>bm :action CloseAllEditorsButActive<CR>
 nmap <leader>wh :action SplitHorizontally<CR>
 nmap <leader>wv :action SplitVertically<CR>
 
@@ -38,6 +41,9 @@ nmap <leader>dc :action Resume<CR>
 nmap <leader>dn :action StepOver<CR>
 nmap <leader>di :action StepInto<CR>
 nmap <leader>do :action StepOut<CR>
+
+nmap <leader>g :action Generate<CR>
+nmap K :action QuickJavaDoc<CR>
 
 " Handlers
 sethandler <C-2> a:vim
