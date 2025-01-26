@@ -109,16 +109,37 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 git clone https://github.com/catppuccin/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting-catppuccin
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
-# Add configuration files with stow
-echo "[INFO] Adding configuration files with stow..."
-cd stow && stow -t ~ * && cd ..
-
 # Clean up
 echo "[INFO] Cleaning up..."
 sudo pacman -Rns --noconfirm yay xterm
 rm -rf ~/.cache/yay
 rm -rf ~/.config/yay
 sudo pacman -Rns --noconfirm $(pacman -Qdtq)
+
+# Add configuration files with stow
+echo "[INFO] Adding configuration files with stow..."
+cd stow
+stow -t ~ .gitconfig
+stow -t ~ .gtkrc-2.0
+stow -t ~ .icons
+stow -t ~ .ideavimrc
+stow -t ~ .oh-my-zsh
+stow -t ~ .p10k.zsh
+stow -t ~ .themes
+stow -t ~ .Xresources
+stow -t ~ .zshrc
+stow -t ~ alacritty
+stow -t ~ awesome
+stow -t ~ gtk-3.0
+stow -t ~ Kvantum
+stow -t ~ mimeapps.list
+stow -t ~ mpv
+stow -t ~ nvim
+stow -t ~ qt5ct
+stow -t ~ qt6ct
+stow -t ~ rofi
+stow -t ~ xfce4
+cd ..
 
 echo "[INFO] Done!"
 echo "[INFO] Please, reboot your system."
