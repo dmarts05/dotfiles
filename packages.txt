@@ -74,9 +74,7 @@ grim
 grub-btrfs
 gsfonts
 gst-libav
-gst-plugin-bad
 gst-plugin-pipewire
-gst-plugin-ugly
 gutenprint
 gvfs
 haveged
