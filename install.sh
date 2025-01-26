@@ -104,10 +104,6 @@ papirus-folders -C cat-mocha-mauve --theme Papirus-Dark
 echo "[INFO] Setting up ZSH, Oh My ZSH, Powerlevel10k and ZSH plugins..."
 echo "[INFO] Please, exit ZSH when the installation is finished."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/catppuccin/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting-catppuccin
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 # Clean up
 echo "[INFO] Cleaning up..."
@@ -118,6 +114,9 @@ sudo pacman -Rns --noconfirm $(pacman -Qdtq)
 
 # Add configuration files with stow
 echo "[INFO] Adding configuration files with stow..."
+# First remove default configuration files
+rm -rf ~/.gitconfig ~/.gtkrc-2.0 ~/.icons ~/.ideavimrc ~/.oh-my-zsh ~/.p10k.zsh ~/.themes ~/.Xresources ~/.zshrc
+rm -rf ~/.config/alacritty ~/.config/awesome ~/.config/gtk-3.0 ~/.config/Kvantum ~/.config/mpv ~/.config/nvim ~/.config/qt5ct ~/.config/qt6ct ~/.config/rofi ~/.config/xfce4
 cd stow
 stow -t ~ .gitconfig
 stow -t ~ .gtkrc-2.0
