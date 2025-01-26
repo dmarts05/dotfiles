@@ -45,7 +45,7 @@ fi
 
 # Set groups for the user
 echo "[INFO] Setting groups for the user..."
-sudo usermod -aG video,audio,lp,scanner,virtualbox,docker $USER
+sudo usermod -aG video,audio,lp,scanner,vboxusers,docker $USER
 
 # Enable ly
 echo "[INFO] Enabling ly..."
