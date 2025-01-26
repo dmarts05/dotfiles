@@ -1,3 +1,5 @@
+cuda
+cuda-tools
 nvidia
 nvidia-container-toolkit
 nvidia-settings

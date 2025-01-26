@@ -24,8 +24,6 @@ broadcom-wl-dkms
 brother-dcpl2520dw
 bun-bin
 cantarell-fonts
-cuda
-cuda-tools
 cups
 cups-filters
 cups-pdf
@@ -228,6 +226,5 @@ xorg-xrandr
 xss-lock
 xz
 yad
-yay
 zip
 zsh
