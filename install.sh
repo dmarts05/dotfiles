@@ -9,7 +9,7 @@ fi
 # Ask user if we are on deskop, laptop or vm
 echo "[INFO] Are you on desktop or laptop? (desktop/laptop/vm)"
 read -r device
-if [ "$device" != "desktop" ] && [ "$device" != "laptop" ] && [ "$device" != "vm" ]; then
+if [[ "$device" != "desktop" && "$device" != "laptop" && "$device" != "vm" ]]; then
     echo "[ERROR] Please, enter desktop or laptop, exiting..."
     exit
 fi
@@ -82,7 +82,7 @@ fi
 
 # Add environment variables to /etc/environment
 echo "[INFO] Adding environment variables to /etc/environment..."
-if [ "$device" = "desktop" || "$device" = "vm" ]; then
+if [[ "$device" = "desktop" || "$device" = "vm" ]]; then
     sudo cp ./replace/etc/environment-desktop /etc/environment
 elif [ "$device" = "laptop" ]; then
     sudo cp ./replace/etc/environment-laptop /etc/environment
@@ -158,7 +158,7 @@ stow -t ~ nvim
 stow -t ~ qt5ct
 stow -t ~ qt6ct
 # Add desktop modules
-if [ "$device" = "desktop" || "$device" = "vm" ]; then
+if [[ "$device" = "desktop" || "$device" = "vm" ]]; then
     stow -t ~ .gtkrc-2.0-desktop
     stow -t ~ .Xresources-desktop
     stow -t ~ alacritty-desktop
