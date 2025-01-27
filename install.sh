@@ -6,10 +6,10 @@ if [ "$EUID" -eq 0 ]; then
     exit
 fi
 
-# Ask user if we are on deskop or laptop
-echo "[INFO] Are you on desktop or laptop? (desktop/laptop)"
+# Ask user if we are on deskop, laptop or vm
+echo "[INFO] Are you on desktop or laptop? (desktop/laptop/vm)"
 read -r device
-if [ "$device" != "desktop" ] && [ "$device" != "laptop" ]; then
+if [ "$device" != "desktop" ] && [ "$device" != "laptop" ] && [ "$device" != "vm" ]; then
     echo "[ERROR] Please, enter desktop or laptop, exiting..."
     exit
 fi
@@ -82,7 +82,7 @@ fi
 
 # Add environment variables to /etc/environment
 echo "[INFO] Adding environment variables to /etc/environment..."
-if [ "$device" = "desktop" ]; then
+if [ "$device" = "desktop" || "$device" = "vm" ]; then
     sudo cp ./replace/etc/environment-desktop /etc/environment
 elif [ "$device" = "laptop" ]; then
     sudo cp ./replace/etc/environment-laptop /etc/environment
@@ -102,6 +102,8 @@ if [ "$device" = "desktop" ]; then
     sudo cp ./replace/etc/default/grub-desktop /etc/default/grub
 elif [ "$device" = "laptop" ]; then
     sudo cp ./replace/etc/default/grub-laptop /etc/default/grub
+elif [ "$device" = "vm" ]; then
+    sudo cp ./replace/etc/default/grub-vm /etc/default/grub
 fi
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo systemctl enable cronie
@@ -156,7 +158,7 @@ stow -t ~ nvim
 stow -t ~ qt5ct
 stow -t ~ qt6ct
 # Add desktop modules
-if [ "$device" = "desktop" ]; then
+if [ "$device" = "desktop" || "$device" = "vm" ]; then
     stow -t ~ .gtkrc-2.0-desktop
     stow -t ~ .Xresources-desktop
     stow -t ~ alacritty-desktop
