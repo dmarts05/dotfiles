@@ -54,15 +54,12 @@ end
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "gtk/theme.lua")
 beautiful.init(string.format("%s/.config/awesome/theme.lua", os.getenv("HOME")))
 
--- Use correct status icon size
-awesome.set_preferred_icon_size(32)
-
 -- Enable gaps
 beautiful.useless_gap = 3
 beautiful.gap_single_client = true
 
 local horizontal_spacing = 4
-local vertical_spacing = 8
+local vertical_spacing = 10
 
 -- Add systray spacing
 beautiful.systray_icon_spacing = horizontal_spacing * 2
@@ -88,16 +85,19 @@ awful.layout.layouts = {awful.layout.suit.tile.right, awful.layout.suit.tile.lef
 
 -- {{{ Wibar
 
-local widget_size = 20
+local widget_size = 24
+
+-- Use correct status icon size
+awesome.set_preferred_icon_size(widget_size)
 
 -- Volume widget
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 
 -- Battery widget
--- local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 
 -- Brightness widget
--- local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
+local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 
 -- Create a textclock widget
 local mytextclock = wibox.widget.textclock()
@@ -215,39 +215,28 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             wibox.layout.margin(wibox.widget.systray(), horizontal_spacing, horizontal_spacing, vertical_spacing,
                 vertical_spacing),
-            -- wibox.layout.margin(
-            -- 	brightness_widget({
-            -- 		step = 5,
-            -- 		size = widget_size,
-            -- 		type = "arc",
-            -- 		program = "light",
-            -- 		base = 50,
-            -- 		timeout = 60,
-            -- 	}),
-            -- 	horizontal_spacing,
-            -- 	horizontal_spacing,
-            -- 	vertical_spacing,
-            -- 	vertical_spacing
-            -- ),
+            wibox.layout.margin(brightness_widget({
+                step = 5,
+                size = widget_size,
+                type = "arc",
+                program = "light",
+                base = 50,
+                timeout = 60
+            }), horizontal_spacing, horizontal_spacing, vertical_spacing, vertical_spacing),
             wibox.layout.margin(volume_widget({
                 step = 5,
                 widget_type = "arc",
-                size = widget_size
+                size = widget_size - 6
             }), horizontal_spacing, horizontal_spacing, vertical_spacing, vertical_spacing),
-            -- wibox.layout.margin(
-            -- 	batteryarc_widget({
-            -- 		size = widget_size,
-            -- 		show_current_level = true,
-            -- 		notification_position = "top_right",
-            -- 		timeout = 60,
-            -- 	}),
-            -- 	horizontal_spacing,
-            -- 	horizontal_spacing,
-            -- 	vertical_spacing,
-            -- 	vertical_spacing
-            -- ),
-            wibox.layout.margin(s.mylayoutbox, horizontal_spacing, horizontal_spacing, vertical_spacing,
-                vertical_spacing),
+            wibox.layout.margin(battery_widget({
+                show_current_level = false,
+                display_notification = true,
+                notification_position = "top_right",
+                warning_message_position = "top_right",
+                timeout = 30
+            }), horizontal_spacing, horizontal_spacing, vertical_spacing, vertical_spacing),
+            wibox.layout.margin(s.mylayoutbox, horizontal_spacing, horizontal_spacing, vertical_spacing + 2,
+                vertical_spacing + 2),
             wibox.layout.margin(mytextclock, horizontal_spacing, horizontal_spacing, vertical_spacing, vertical_spacing)
         }
     })
@@ -333,12 +322,12 @@ end, {
     description = "brightness down",
     group = "hotkeys"
 }), awful.key({}, "XF86AudioRaiseVolume", function()
-    volume_widget:inc(1)
+    volume_widget:inc()
 end, {
     description = "volume up",
     group = "hotkeys"
 }), awful.key({}, "XF86AudioLowerVolume", function()
-    volume_widget:dec(1)
+    volume_widget:dec()
 end, {
     description = "volume down",
     group = "hotkeys"
@@ -400,7 +389,7 @@ end, {
     group = "application"
 }), -- Browser
 awful.key({modkey}, "b", function()
-    awful.util.spawn("thorium-browser")
+    awful.util.spawn("brave")
 end, {
     description = "run browser",
     group = "application"

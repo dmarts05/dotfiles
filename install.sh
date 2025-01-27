@@ -6,9 +6,14 @@ if [ "$EUID" -eq 0 ]; then
     exit
 fi
 
-# Ask user if they need NVIDIA drivers
-echo "[INFO] Do you need NVIDIA drivers? (y/n)"
-read -r nvidia
+# Ask user if we are on deskop or laptop
+echo "[INFO] Are you on desktop or laptop? (desktop/laptop)"
+read -r device
+if [ "$device" != "desktop" ] && [ "$device" != "laptop" ]; then
+    echo "[ERROR] Please, enter desktop or laptop, exiting..."
+    exit
+fi
+
 
 echo "[INFO] Starting installation..."
 
@@ -23,11 +28,7 @@ sudo pacman -Syu --noconfirm
 
 # Install basic packages for installation
 echo "[INFO] Installing basic packages for installation..."
-sudo pacman -S --noconfirm --needed base-devel git wget curl
-
-# Install paru
-echo "[INFO] Installing paru..."
-sudo pacman -S --noconfirm --needed paru
+sudo pacman -S --noconfirm --needed base-devel git wget curl paru
 
 # Change makeflags from makepkg.conf
 echo "[INFO] Changing makeflags from makepkg.conf..."
@@ -37,18 +38,25 @@ sudo cp ./replace/etc/makepkg.conf /etc/makepkg.conf
 echo "[INFO] Installing all packages..."
 paru -S --noconfirm --needed - < packages.txt
 
-# Install NVIDIA drivers if needed
-if [ "$nvidia" = "y" ]; then
+# Install NVIDIA drivers if on desktop
+if [ "$device" = "desktop" ]; then
     echo "[INFO] Installing NVIDIA drivers..."
     paru -S --noconfirm --needed - < nvidia_packages.txt
 fi
 
-# Set groups for the user
-echo "[INFO] Setting groups for the user..."
+# Install auto-cpufreq if on laptop
+if [ "$device" = "laptop" ]; then
+    echo "[INFO] Installing auto-cpufreq..."
+    git clone https://github.com/AdnanHodzic/auto-cpufreq.git
+    cd auto-cpufreq && sudo ./auto-cpufreq-installer && cd .. && rm -rf auto-cpufreq
+fi
+
+# Set user groups
+echo "[INFO] Setting user groups..."
 sudo usermod -aG video,audio,lp,scanner,vboxusers,docker $USER
 
-# Enable ly
-echo "[INFO] Enabling ly..."
+# Enable ly as display manager
+echo "[INFO] Enabling ly as display manager..."
 sudo systemctl enable ly
 
 # Enable CUPS
@@ -60,13 +68,25 @@ echo "[INFO] Enabling bluetooth..."
 sudo systemctl enable bluetooth
 
 # Set up xorg devices configuration
-echo "[INFO] Setting up xorg devices configuration..."
+echo "[INFO] Setting up common xorg devices configuration..."
 sudo mkdir -p /etc/X11/xorg.conf.d
-sudo cp ./replace/etc/X11/xorg.conf.d/* /etc/X11/xorg.conf.d/
+sudo cp ./replace/etc/X11/xorg.conf.d/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf
+sudo cp ./replace/etc/X11/xorg.conf.d/00-mouse.conf /etc/X11/xorg.conf.d/00-mouse.conf
+if [ "$device" = "desktop" ]; then
+    sudo cp ./replace/etc/X11/xorg.conf.d/00-monitor.conf /etc/X11/xorg.conf.d/00-monitor.conf
+    sudo cp ./replace/etc/X11/xorg.conf.d/20-nvidia.conf /etc/X11/xorg.conf.d/20-nvidia.conf
+elif [ "$device" = "laptop" ]; then
+    sudo cp ./replace/etc/X11/xorg.conf.d/00-touchpad.conf /etc/X11/xorg.conf.d/00-touchpad.conf
+    sudo cp ./replace/etc/X11/xorg.conf.d/20-amdgpu.conf /etc/X11/xorg.conf.d/20-amdgpu.conf
+fi
 
 # Add environment variables to /etc/environment
 echo "[INFO] Adding environment variables to /etc/environment..."
-sudo cp ./replace/etc/environment /etc/environment
+if [ "$device" = "desktop" ]; then
+    sudo cp ./replace/etc/environment-desktop /etc/environment
+elif [ "$device" = "laptop" ]; then
+    sudo cp ./replace/etc/environment-laptop /etc/environment
+fi
 
 # Add PAM config for automatically unlocking keyring
 echo "[INFO] Adding PAM config for automatically unlocking keyring..."
@@ -76,9 +96,13 @@ sudo cp ./replace/etc/pam.d/login /etc/pam.d/login
 echo "[INFO] Creating directories..."
 mkdir -p {~/Documents,~/Downloads,~/Pictures,~/Videos,~/Music,~/Projects}
 
-# Set up snapshots with Timeshift and configure GRUB
-echo "[INFO] Setting up snapshots with Timeshift and configuring GRUB..."
-sudo cp ./replace/etc/default/grub /etc/default/grub
+# Configure Grub with snapshots
+echo "[INFO] Configuring Grub with snapshots..."
+if [ "$device" = "desktop" ]; then
+    sudo cp ./replace/etc/default/grub-desktop /etc/default/grub
+elif [ "$device" = "laptop" ]; then
+    sudo cp ./replace/etc/default/grub-laptop /etc/default/grub
+fi
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo systemctl enable cronie
 sudo systemctl enable grub-btrfsd
@@ -94,7 +118,6 @@ sudo ufw allow qBittorrent
 # Configure docker
 echo "[INFO] Configuring docker..."
 sudo systemctl enable docker.socket
-sudo usermod -aG docker $USER
 
 # Set up Papirus folders
 echo "[INFO] Setting up Papirus folders..."
@@ -117,27 +140,40 @@ echo "[INFO] Adding configuration files with stow..."
 # First remove default configuration files
 rm -rf ~/.gitconfig ~/.gtkrc-2.0 ~/.icons ~/.ideavimrc ~/.oh-my-zsh ~/.p10k.zsh ~/.themes ~/.Xresources ~/.zshrc
 rm -rf ~/.config/alacritty ~/.config/awesome ~/.config/gtk-3.0 ~/.config/Kvantum ~/.config/mpv ~/.config/nvim ~/.config/qt5ct ~/.config/qt6ct ~/.config/rofi ~/.config/xfce4
+# Add common modules
 cd stow
 stow -t ~ .gitconfig
-stow -t ~ .gtkrc-2.0
 stow -t ~ .icons
 stow -t ~ .ideavimrc
 stow -t ~ .oh-my-zsh
 stow -t ~ .p10k.zsh
 stow -t ~ .themes
-stow -t ~ .Xresources
 stow -t ~ .zshrc
-stow -t ~ alacritty
-stow -t ~ awesome
-stow -t ~ gtk-3.0
 stow -t ~ Kvantum
 stow -t ~ mimeapps.list
 stow -t ~ mpv
 stow -t ~ nvim
 stow -t ~ qt5ct
 stow -t ~ qt6ct
-stow -t ~ rofi
-stow -t ~ xfce4
+# Add desktop modules
+if [ "$device" = "desktop" ]; then
+    stow -t ~ .gtkrc-2.0-desktop
+    stow -t ~ .Xresources-desktop
+    stow -t ~ alacritty-desktop
+    stow -t ~ awesome-desktop
+    stow -t ~ gtk-3.0-desktop
+    stow -t ~ rofi-desktop
+    stow -t ~ xfce4-desktop
+# Add laptop modules
+elif [ "$device" = "laptop" ]; then
+    stow -t ~ .gtkrc-2.0-laptop
+    stow -t ~ .Xresources-laptop
+    stow -t ~ alacritty-laptop
+    stow -t ~ awesome-laptop
+    stow -t ~ gtk-3.0-laptop
+    stow -t ~ rofi-laptop
+    stow -t ~ xfce4-laptop
+fi
 cd ..
 
 echo "[INFO] Done!"
