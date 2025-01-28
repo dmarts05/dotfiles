@@ -116,6 +116,7 @@ sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow ssh
 sudo ufw allow qBittorrent
+sudo ufw allow out 53 # DNS
 
 # Configure docker
 echo "[INFO] Configuring docker..."
