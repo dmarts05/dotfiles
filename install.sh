@@ -7,7 +7,7 @@ if [ "$EUID" -eq 0 ]; then
 fi
 
 # Ask user if we are on deskop, laptop or vm
-echo "[INFO] Are you on desktop or laptop? (desktop/laptop/vm)"
+echo "[INFO] Are you on desktop, laptop or vm?"
 read -r device
 if [[ "$device" != "desktop" && "$device" != "laptop" && "$device" != "vm" ]]; then
     echo "[ERROR] Please, enter desktop or laptop, exiting..."
