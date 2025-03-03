@@ -167,7 +167,7 @@ sg3_utils
 smartmontools
 sof-firmware
 splix
-spotify-adblock
+spotify
 stow
 system-config-printer
 telegram-desktop
@@ -227,5 +227,6 @@ xorg-xrandr
 xss-lock
 xz
 yad
+zenity
 zip
 zsh
