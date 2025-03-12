@@ -377,7 +377,7 @@ end, {
     group = "application"
 }), -- Music
 awful.key({modkey}, "m", function()
-    awful.util.spawn("env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify --uri=%U")
+    awful.util.spawn("spotify")
 end, {
     description = "run spotify",
     group = "application"
