@@ -158,6 +158,7 @@ stow -t ~ mpv
 stow -t ~ nvim
 stow -t ~ qt5ct
 stow -t ~ qt6ct
+stow -t ~ wireplumber
 # Add desktop modules
 if [[ "$device" = "desktop" || "$device" = "vm" ]]; then
     stow -t ~ .gtkrc-2.0-desktop
