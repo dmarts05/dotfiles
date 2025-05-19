@@ -193,7 +193,7 @@ local function worker(user_args)
     local args         = user_args or {}
     local mixer_cmd    = args.mixer_cmd or "pavucontrol"
     local widget_type  = args.widget_type or "icon_and_text"
-    local refresh_rate = args.refresh_rate or 0.1
+    local refresh_rate = args.refresh_rate or 1
     local step         = args.step or 5
     local device_type  = args.device_type or "sink"
 
