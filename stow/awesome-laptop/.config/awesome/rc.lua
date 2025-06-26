@@ -383,7 +383,7 @@ end, {
     group = "application"
 }), -- Discord
 awful.key({modkey}, "d", function()
-    awful.util.spawn("discord")
+    awful.util.spawn("vesktop")
 end, {
     description = "run discord",
     group = "application"

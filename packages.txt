@@ -32,7 +32,6 @@ cups-pdf
 curl
 delve
 dhclient
-discord
 djvulibre
 dmidecode
 dmraid
@@ -203,6 +202,7 @@ unzip
 upower
 usb_modeswitch
 uv
+vesktop-bin
 virtualbox
 virtualbox-guest-iso
 virtualbox-host-modules-arch
