@@ -67,6 +67,10 @@ sudo systemctl enable cups
 echo "[INFO] Enabling bluetooth..."
 sudo systemctl enable bluetooth
 
+# Enable pipewire for user
+echo "[INFO] Enabling pipewire..."
+systemctl --user enable pipewire
+
 # Set up xorg devices configuration
 echo "[INFO] Setting up common xorg devices configuration..."
 sudo mkdir -p /etc/X11/xorg.conf.d
