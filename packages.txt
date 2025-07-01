@@ -26,6 +26,7 @@ broadcom-wl-dkms
 brother-dcpl2520dw
 bun-bin
 cantarell-fonts
+cbatticon
 cups
 cups-filters
 cups-pdf
@@ -207,6 +208,7 @@ virtualbox
 virtualbox-guest-iso
 virtualbox-host-modules-arch
 visual-studio-code-bin
+volumeicon
 wget
 wireplumber
 wpa_supplicant

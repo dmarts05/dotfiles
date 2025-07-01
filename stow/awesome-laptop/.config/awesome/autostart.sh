@@ -8,4 +8,6 @@ run() {
 
 run "/usr/lib/xfce-polkit/xfce-polkit"
 run "nm-applet" --indicator
+run "volumeicon"
+run "cbatticon" -i notification -p 15 -c "notify-send 'Battery low! Plug in the charger.'"
 run "xss-lock" -- "i3lock" -c "#1e1e2e"
