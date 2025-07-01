@@ -130,10 +130,9 @@ sudo systemctl enable docker.socket
 echo "[INFO] Setting up Papirus folders..."
 papirus-folders -C cat-mocha-mauve --theme Papirus-Dark
 
-# Set up ZSH, Oh My ZSH, Powerlevel10k and ZSH plugins
-echo "[INFO] Setting up ZSH, Oh My ZSH, Powerlevel10k and ZSH plugins..."
-echo "[INFO] Please, exit ZSH when the installation is finished."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Set ZSH as default shell
+echo "[INFO] Setting ZSH as default shell..."
+chsh -s /usr/bin/zsh
 
 # Clean up
 echo "[INFO] Cleaning up..."
@@ -145,17 +144,16 @@ sudo pacman -Rns --noconfirm $(pacman -Qdtq)
 # Add configuration files with stow
 echo "[INFO] Adding configuration files with stow..."
 # First remove default configuration files
-rm -rf ~/.gitconfig ~/.gtkrc-2.0 ~/.icons ~/.ideavimrc ~/.oh-my-zsh ~/.p10k.zsh ~/.themes ~/.Xresources ~/.zshrc
+rm -rf ~/.gitconfig ~/.gtkrc-2.0 ~/.icons ~/.ideavimrc ~/.themes ~/.Xresources ~/.zshrc
 rm -rf ~/.config/alacritty ~/.config/awesome ~/.config/gtk-3.0 ~/.config/Kvantum ~/.config/mpv ~/.config/nvim ~/.config/qt5ct ~/.config/qt6ct ~/.config/rofi ~/.config/xfce4
 # Add common modules
 cd stow
 stow -t ~ .gitconfig
 stow -t ~ .icons
 stow -t ~ .ideavimrc
-stow -t ~ .oh-my-zsh
-stow -t ~ .p10k.zsh
 stow -t ~ .themes
 stow -t ~ .zshrc
+stow -t ~ .zsh
 stow -t ~ Kvantum
 stow -t ~ mimeapps.list
 stow -t ~ mpv
