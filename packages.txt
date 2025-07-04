@@ -22,6 +22,7 @@ bluez-utils
 brave-bin
 breeze-icons
 bridge-utils
+brightnessctl
 broadcom-wl-dkms
 brother-dcpl2520dw
 bun-bin
