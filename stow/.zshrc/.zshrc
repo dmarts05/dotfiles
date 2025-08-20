@@ -1,5 +1,5 @@
 # Prompt: show current directory in bold blue with a pink arrow
-PS1='%F{blue}%B%~%b%f %F{magenta}❯%f '
+PS1='%F{blue}%B%~%b%f %F{green}❯%f '
 
 # History configuration
 HISTFILE=~/.zsh_history       # File to save command history

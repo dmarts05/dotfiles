@@ -118,7 +118,7 @@ sudo pacman -Rns --noconfirm $(pacman -Qdtq)
 echo "[INFO] Adding configuration files with stow..."
 
 # First remove default configuration files that might conflict
-rm -rf ~/.config/alacritty ~/.config/hypr ~/.config/mpv ~/.config/wireplumber
+rm -rf ~/.config/alacritty ~/.config/hypr ~/.config/mpv ~/.config/wireplumber ~/.zsh ~/.zshrc
 rm -f ~/.config/spotify-launcher.conf ~/.config/brave-flags.conf
 
 # Go into stow directory
@@ -129,6 +129,8 @@ stow -t ~ mpv
 stow -t ~ wireplumber
 stow -t ~ brave-flags.conf
 stow -t ~ spotify-launcher.conf
+stow -t ~ .zsh
+stow -t ~ .zshrc
 
 # Desktop or laptop specific
 if [[ "$device" = "desktop" || "$device" = "vm" ]]; then
