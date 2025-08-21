@@ -2,28 +2,27 @@
 
 # Check if user is root
 if [ "$EUID" -eq 0 ]; then
-    echo "[ERROR] Please do not run this script as root, exiting..."
-    exit
+  echo "[ERROR] Please do not run this script as root, exiting..."
+  exit
 fi
 
 # Install Omarchy (only if not already installed)
 if [ ! -d "$HOME/.local/share/omarchy" ]; then
-    echo "[INFO] Omarchy not found, installing..."
-    echo "[INFO] Once Omarchy finishes installing (and possibly reboots),"
-    echo "[INFO] you will need to rerun this script to continue setup."
-    wget -qO- https://omarchy.org/install-bare | bash
-    exit 0
+  echo "[INFO] Omarchy not found, installing..."
+  echo "[INFO] Once Omarchy finishes installing (and possibly reboots),"
+  echo "[INFO] you will need to rerun this script to continue setup."
+  wget -qO- https://omarchy.org/install-bare | bash
+  exit 0
 else
-    echo "[INFO] Omarchy already installed, skipping..."
+  echo "[INFO] Omarchy already installed, skipping..."
 fi
-
 
 # Ask user if we are on deskop, laptop or vm
 echo "[INFO] Are you on desktop, laptop or vm?"
 read -r device
 if [[ "$device" != "desktop" && "$device" != "laptop" && "$device" != "vm" ]]; then
-    echo "[ERROR] Please, enter desktop or laptop, exiting..."
-    exit
+  echo "[ERROR] Please, enter desktop or laptop, exiting..."
+  exit
 fi
 
 echo "[INFO] Starting installation..."
@@ -38,57 +37,16 @@ yay -S --noconfirm --needed base-devel git wget curl
 
 # Install app packages
 echo "[INFO] Installing app packages..."
-paru -S --noconfirm --needed - < packages.txt
-
-# Install NVIDIA drivers if on desktop
-if [ "$device" = "desktop" ]; then
-    echo "[INFO] Installing NVIDIA drivers..."
-    paru -S --noconfirm --needed libva-nvidia-driver nvidia nvidia-settings nvidia-utils nvtop
-    
-    echo "[INFO] Configuring mkinitcpio for NVIDIA early KMS..."
-    CONF="/etc/mkinitcpio.conf"
-    MODULES_TO_ADD=("nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm")
-    
-    # Backup first
-    sudo cp "$CONF" "${CONF}.bak.$(date +%s)"
-    
-    # Extract current MODULES= line
-    current=$(grep -E '^MODULES=' "$CONF")
-    
-    # Remove parentheses and split into array
-    current_mods=($(echo "$current" | sed -E 's/^MODULES=\(|\)$//g'))
-    
-    # Ensure existing ones are preserved
-    new_mods=()
-    for mod in "${current_mods[@]}"; do
-        [[ " ${new_mods[*]} " == *" $mod "* ]] || new_mods+=("$mod")
-    done
-    
-    # Add NVIDIA modules if missing
-    for mod in "${MODULES_TO_ADD[@]}"; do
-        [[ " ${new_mods[*]} " == *" $mod "* ]] || new_mods+=("$mod")
-    done
-    
-    # Build new MODULES line
-    new_line="MODULES=(${new_mods[*]})"
-    
-    # Replace in config
-    sudo sed -i "s|^MODULES=.*|$new_line|" "$CONF"
-    
-    # Rebuild initramfs
-    echo "[INFO] Regenerating initramfs..."
-    sudo mkinitcpio -P
-fi
+yay -S --noconfirm --needed - <packages.txt
 
 # Install virtualization guest packages if running inside a VM
 if [ "$device" = "vm" ]; then
-    echo "[INFO] Installing virtualization guest packages..."
-    yay -S --noconfirm --needed qemu-guest-agent spice-vdagent xf86-video-qxl
-    
-    echo "[INFO] Enabling QEMU guest agent..."
-    sudo systemctl enable qemu-guest-agent
-fi
+  echo "[INFO] Installing virtualization guest packages..."
+  yay -S --noconfirm --needed qemu-guest-agent spice-vdagent xf86-video-qxl
 
+  echo "[INFO] Enabling QEMU guest agent..."
+  sudo systemctl enable qemu-guest-agent
+fi
 
 # Set general user groups
 echo "[INFO] Setting general user groups..."
@@ -140,14 +98,13 @@ stow -t ~ brave-flags.conf
 stow -t ~ spotify-launcher.conf
 stow -t ~ .zsh
 stow -t ~ .zshrc
+stow -t ~ alacritty
 
 # Desktop or laptop specific
 if [[ "$device" = "desktop" || "$device" = "vm" ]]; then
-    stow -t ~ alacritty-desktop
-    stow -t ~ hypr-desktop
-    elif [ "$device" = "laptop" ]; then
-    stow -t ~ alacritty-laptop
-    stow -t ~ hypr-laptop
+  stow -t ~ hypr-desktop
+elif [ "$device" = "laptop" ]; then
+  stow -t ~ hypr-laptop
 fi
 
 cd ..
