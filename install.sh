@@ -121,6 +121,7 @@ chsh -s /usr/bin/zsh
 # Clean up
 echo "[INFO] Cleaning up..."
 yay -Rns --noconfirm $(pacman -Qdtq)
+yay -Rns --noconfirm ufw-docker
 
 # Add configuration files with stow
 echo "[INFO] Adding configuration files with stow..."
