@@ -101,12 +101,11 @@ mkdir -p {~/Documents,~/Downloads,~/Pictures,~/Videos,~/Music,~/Projects}
 # Set up cronie service required for Timeshift
 sudo systemctl enable cronie
 
-# Set up libvirt services
+# Set up libvirt
 sudo systemctl enable libvirtd
 sudo systemctl enable virtlogd
-
-# Copy files from replace to libvirt config folder
 sudo cp -r ./replace/etc/libvirt/* /etc/libvirt/
+sudo usermod -aG libvirt $USER
 
 # Set up nautilus open any terminal extension
 sudo glib-compile-schemas /usr/share/glib-2.0/schemas
