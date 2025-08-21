@@ -3,10 +3,12 @@ brave-bin
 bridge-utils
 brother-dcpl2520dw
 bun-bin
+cmake
 dbeaver
 dnsmasq
 gparted
 libreoffice-fresh
+meson
 nautilus-open-any-terminal
 node
 obs-studio

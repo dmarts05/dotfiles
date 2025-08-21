@@ -72,6 +72,12 @@ gsettings set com.github.stunkymonkey.nautilus-open-any-terminal keybindings '<C
 gsettings set com.github.stunkymonkey.nautilus-open-any-terminal new-tab true
 gsettings set com.github.stunkymonkey.nautilus-open-any-terminal flatpak system
 
+# Add Hyprland plugins
+hyprpm update
+hyprpm add https://github.com/Duckonaut/split-monitor-workspaces
+hyprpm enable split-monitor-workspaces
+hyprpm reload
+
 # Set ZSH as default shell
 echo "[INFO] Setting ZSH as default shell..."
 chsh -s /usr/bin/zsh
