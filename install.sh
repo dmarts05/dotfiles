@@ -6,6 +6,18 @@ if [ "$EUID" -eq 0 ]; then
     exit
 fi
 
+# Install Omarchy (only if not already installed)
+if [ ! -d "$HOME/.local/share/omarchy" ]; then
+    echo "[INFO] Omarchy not found, installing..."
+    echo "[INFO] Once Omarchy finishes installing (and possibly reboots),"
+    echo "[INFO] you will need to rerun this script to continue setup."
+    wget -qO- https://omarchy.org/install-bare | bash
+    exit 0
+else
+    echo "[INFO] Omarchy already installed, skipping..."
+fi
+
+
 # Ask user if we are on deskop, laptop or vm
 echo "[INFO] Are you on desktop, laptop or vm?"
 read -r device
@@ -18,14 +30,11 @@ echo "[INFO] Starting installation..."
 
 # Update and upgrade packages
 echo "[INFO] Updating and upgrading packages..."
-sudo pacman -Syu --noconfirm
+yay -Syu --noconfirm
 
 # Install basic packages for installation
-echo "[INFO] Installing basic packages for installation..."
-sudo pacman -S --noconfirm --needed base-devel git wget curl
-
-# Install Omarchy
-wget -qO- https://omarchy.org/install-bare | bash
+echo "[INFO] Installing basic packages..."
+yay -S --noconfirm --needed base-devel git wget curl
 
 # Install app packages
 echo "[INFO] Installing app packages..."
@@ -35,37 +44,37 @@ paru -S --noconfirm --needed - < packages.txt
 if [ "$device" = "desktop" ]; then
     echo "[INFO] Installing NVIDIA drivers..."
     paru -S --noconfirm --needed libva-nvidia-driver nvidia nvidia-settings nvidia-utils nvtop
-
+    
     echo "[INFO] Configuring mkinitcpio for NVIDIA early KMS..."
     CONF="/etc/mkinitcpio.conf"
     MODULES_TO_ADD=("nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm")
-
+    
     # Backup first
     sudo cp "$CONF" "${CONF}.bak.$(date +%s)"
-
+    
     # Extract current MODULES= line
     current=$(grep -E '^MODULES=' "$CONF")
-
+    
     # Remove parentheses and split into array
     current_mods=($(echo "$current" | sed -E 's/^MODULES=\(|\)$//g'))
-
+    
     # Ensure existing ones are preserved
     new_mods=()
     for mod in "${current_mods[@]}"; do
         [[ " ${new_mods[*]} " == *" $mod "* ]] || new_mods+=("$mod")
     done
-
+    
     # Add NVIDIA modules if missing
     for mod in "${MODULES_TO_ADD[@]}"; do
         [[ " ${new_mods[*]} " == *" $mod "* ]] || new_mods+=("$mod")
     done
-
+    
     # Build new MODULES line
     new_line="MODULES=(${new_mods[*]})"
-
+    
     # Replace in config
     sudo sed -i "s|^MODULES=.*|$new_line|" "$CONF"
-
+    
     # Rebuild initramfs
     echo "[INFO] Regenerating initramfs..."
     sudo mkinitcpio -P
@@ -74,8 +83,8 @@ fi
 # Install virtualization guest packages if running inside a VM
 if [ "$device" = "vm" ]; then
     echo "[INFO] Installing virtualization guest packages..."
-    sudo pacman -S --noconfirm --needed qemu-guest-agent spice-vdagent xf86-video-qxl
-
+    yay -S --noconfirm --needed qemu-guest-agent spice-vdagent xf86-video-qxl
+    
     echo "[INFO] Enabling QEMU guest agent..."
     sudo systemctl enable qemu-guest-agent
 fi
@@ -112,7 +121,7 @@ chsh -s /usr/bin/zsh
 
 # Clean up
 echo "[INFO] Cleaning up..."
-sudo pacman -Rns --noconfirm $(pacman -Qdtq)
+yay -Rns --noconfirm $(pacman -Qdtq)
 
 # Add configuration files with stow
 echo "[INFO] Adding configuration files with stow..."
@@ -136,7 +145,7 @@ stow -t ~ .zshrc
 if [[ "$device" = "desktop" || "$device" = "vm" ]]; then
     stow -t ~ alacritty-desktop
     stow -t ~ hypr-desktop
-elif [ "$device" = "laptop" ]; then
+    elif [ "$device" = "laptop" ]; then
     stow -t ~ alacritty-laptop
     stow -t ~ hypr-laptop
 fi
