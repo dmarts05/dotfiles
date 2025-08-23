@@ -46,8 +46,7 @@
         "interval": 3600
     },
     "clock": {
-        "format": "{:%A %H:%M}",
-        "format-alt": "{:%d %B W%V %Y}",
+        "format": "{:%d/%m/%y %R}",
         "tooltip": false,
         "on-click-right": "omarchy-cmd-tzupdate"
     },
