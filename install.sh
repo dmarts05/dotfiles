@@ -65,6 +65,9 @@ sudo systemctl enable virtlogd
 sudo cp -r ./replace/etc/libvirt/* /etc/libvirt/
 sudo usermod -aG libvirt $USER
 
+# Change boot timeout to 1 second
+sudo bootctl set-timeout 1
+
 # Set up nautilus open any terminal extension
 sudo glib-compile-schemas /usr/share/glib-2.0/schemas
 gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal alacritty
