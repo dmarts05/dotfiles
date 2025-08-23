@@ -33,5 +33,6 @@ vesktop-bin
 virt-manager
 virt-viewer
 visual-studio-code-bin
+xcursor-pro-hyprcursor
 zip
 zsh
