@@ -7,10 +7,12 @@ cmake
 dbeaver
 dnsmasq
 gparted
+gvfs-smb
 libreoffice-fresh
 meson
 nautilus-open-any-terminal
 node
+npm
 obs-studio
 openbsd-netcat
 pavucontrol
@@ -21,6 +23,7 @@ reflector
 reflector-simple
 spotify-launcher
 stow
+tailscale
 telegram-desktop
 terminaltexteffects-git
 timeshift
