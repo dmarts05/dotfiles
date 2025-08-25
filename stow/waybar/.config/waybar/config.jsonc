@@ -4,7 +4,7 @@
     "position": "top",
     "spacing": 0,
     "height": 26,
-    "modules-left": ["custom/omarchy", "hyprland/workspaces"],
+    "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock", "custom/update"],
     "modules-right": ["tray", "bluetooth", "network", "pulseaudio", "battery"],
     "hyprland/workspaces": {
@@ -33,11 +33,6 @@
             "active": "󱓻"
         },
         "all-outputs": false
-    },
-    "custom/omarchy": {
-        "format": "",
-        "on-click": "omarchy-menu",
-        "tooltip-format": "Omarchy Menu\n\nSuper + Alt + Space"
     },
     "custom/update": {
         "format": "",
