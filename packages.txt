@@ -5,6 +5,7 @@ brother-dcpl2520dw
 bun-bin
 cmake
 dbeaver
+discord
 dnsmasq
 gparted
 gvfs-smb
@@ -32,7 +33,6 @@ unrar
 unzip
 uv
 vde2
-vesktop-bin
 virt-manager
 virt-viewer
 visual-studio-code-bin
