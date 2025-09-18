@@ -56,17 +56,11 @@ sudo usermod -aG video,audio,lp,scanner $USER
 echo "[INFO] Creating directories..."
 mkdir -p {~/Documents,~/Downloads,~/Pictures,~/Videos,~/Music,~/Projects}
 
-# Set up cronie service required for Timeshift
-sudo systemctl enable cronie
-
 # Set up libvirt
 sudo systemctl enable libvirtd
 sudo systemctl enable virtlogd
 sudo cp -r ./replace/etc/libvirt/* /etc/libvirt/
 sudo usermod -aG libvirt $USER
-
-# Change boot timeout to 1 second
-sudo bootctl set-timeout 1
 
 # Set up nautilus open any terminal extension
 sudo glib-compile-schemas /usr/share/glib-2.0/schemas
@@ -88,7 +82,7 @@ chsh -s /usr/bin/zsh
 # Clean up
 echo "[INFO] Cleaning up..."
 yay -Rns --noconfirm $(pacman -Qdtq)
-yay -Rns --noconfirm ufw-docker
+yay -Rns --noconfirm ufw-docker 1password-beta 1password-cli spotify pinta obsidian signal-desktop typora xournalpp
 
 # Add configuration files with stow
 echo "[INFO] Adding configuration files with stow..."

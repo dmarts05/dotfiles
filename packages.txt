@@ -13,7 +13,7 @@ gvfs-smb
 libreoffice-fresh
 meson
 nautilus-open-any-terminal
-node
+nodejs
 npm
 obs-studio
 openbsd-netcat
@@ -27,8 +27,6 @@ spotify-launcher
 stow
 tailscale
 telegram-desktop
-terminaltexteffects-git
-timeshift
 tree
 unrar
 unzip
