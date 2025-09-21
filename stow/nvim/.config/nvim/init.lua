@@ -11,6 +11,11 @@ vim.cmd [[
 -- Use system clipboard for yank, delete, change, and put operations
 vim.opt.clipboard = "unnamedplus"
 
+-- Map Ctrl+S to save
+vim.keymap.set({ "n", "i", "v" }, "<C-s>", function()
+  vim.cmd.write()
+end, { desc = "Save file" })
+
 -- Lazy.nvim setup
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

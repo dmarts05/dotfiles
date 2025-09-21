@@ -6,7 +6,14 @@
     "height": 26,
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock", "custom/update"],
-    "modules-right": ["tray", "bluetooth", "network", "pulseaudio", "battery"],
+    "modules-right": [
+        "tray",
+        "custom/layout",
+        "bluetooth",
+        "network",
+        "pulseaudio",
+        "battery"
+    ],
     "hyprland/workspaces": {
         "on-click": "activate",
         "format": "{icon}",
@@ -98,5 +105,11 @@
     "tray": {
         "icon-size": 12,
         "spacing": 12
+    },
+    "custom/layout": {
+        "format": "   ",
+        "tooltip-format": "{}",
+        "exec": "hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap'",
+        "interval": 5
     }
 }
