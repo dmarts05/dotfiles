@@ -156,7 +156,7 @@ setup_shell() {
 #---------------------------------------
 cleanup_system() {
   log_info "Removing unwanted packages..."
-  yay -Rns --noconfirm ufw-docker 1password-beta 1password-cli spotify pinta obsidian signal-desktop typora xournalpp || true
+  yay -Rns --noconfirm ufw-docker 1password-beta 1password-cli spotify pinta obsidian signal-desktop typora xournalpp kdenlive || true
 }
 
 #---------------------------------------
