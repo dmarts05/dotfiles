@@ -117,6 +117,18 @@ setup_hyprland() {
   hyprpm reload
 }
 
+setup_hyprland_device() {
+  local device="$1"
+  log_info "Linking Hyprland monitor config for $device..."
+
+  rm -f "$HOME/.config/hypr/monitors.conf"
+
+  case "$device" in
+    desktop|vm) ln -s "$HOME/.config/hypr/monitors/desktop.conf" "$HOME/.config/hypr/monitors.conf" ;;
+    laptop)     ln -s "$HOME/.config/hypr/monitors/laptop.conf"  "$HOME/.config/hypr/monitors.conf" ;;
+  esac
+}
+
 #---------------------------------------
 # Shell setup
 #---------------------------------------
@@ -163,16 +175,7 @@ setup_dotfiles() {
   done
 
   pushd ./stow >/dev/null
-  stow -t ~ alacritty brave-flags.conf mpv nvim spotify-launcher.conf waybar wireplumber .zsh .zshrc
-  popd >/dev/null
-}
-
-setup_dotfiles_device() {
-  pushd ./stow >/dev/null
-  case "$1" in
-    desktop|vm) stow -t ~ hypr-desktop ;;
-    laptop)     stow -t ~ hypr-laptop ;;
-  esac
+  stow -t ~ alacritty brave-flags.conf hypr mpv nvim spotify-launcher.conf waybar wireplumber .zsh .zshrc
   popd >/dev/null
 }
 
@@ -193,7 +196,7 @@ main() {
   setup_shell
   cleanup_system
   setup_dotfiles
-  setup_dotfiles_device "$device"
+  setup_hyprland_device "$device"
 
   log_success "Installation complete! Please reboot your system."
 }

@@ -1,0 +1,2 @@
+# Ignore symbolic links
+stow/hypr/.config/hypr/monitors.conf
