@@ -119,15 +119,29 @@ setup_hyprland() {
 
 setup_hyprland_device() {
   local device="$1"
-  log_info "Linking Hyprland monitor config for $device..."
-
-  rm -f "$HOME/.config/hypr/monitors.conf"
+  local hypr_dir="$HOME/.config/hypr"
+  local monitor_target env_target
 
   case "$device" in
-    desktop|vm) ln -s "$HOME/.config/hypr/monitors/desktop.conf" "$HOME/.config/hypr/monitors.conf" ;;
-    laptop)     ln -s "$HOME/.config/hypr/monitors/laptop.conf"  "$HOME/.config/hypr/monitors.conf" ;;
+    desktop|vm)
+      monitor_target="$hypr_dir/monitors/desktop.conf"
+      env_target="$hypr_dir/envs/desktop.conf"
+      ;;
+    laptop)
+      monitor_target="$hypr_dir/monitors/laptop.conf"
+      env_target="$hypr_dir/envs/laptop.conf"
+      ;;
+    *)
+      log_error "Unknown device: $device"
+      return 1
+      ;;
   esac
+
+  log_info "Linking Hyprland configs for $device..."
+  ln -sf "$monitor_target" "$hypr_dir/monitors.conf"
+  ln -sf "$env_target" "$hypr_dir/envs.conf"
 }
+
 
 #---------------------------------------
 # Shell setup
@@ -141,9 +155,6 @@ setup_shell() {
 # Cleanup
 #---------------------------------------
 cleanup_system() {
-  log_info "Cleaning orphaned packages..."
-  yay -Rns --noconfirm "$(pacman -Qdtq || true)"
-
   log_info "Removing unwanted packages..."
   yay -Rns --noconfirm ufw-docker 1password-beta 1password-cli spotify pinta obsidian signal-desktop typora xournalpp || true
 }
