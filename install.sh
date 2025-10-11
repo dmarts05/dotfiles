@@ -105,6 +105,35 @@ setup_libvirt() {
 }
 
 #---------------------------------------
+# GRUB setup
+#---------------------------------------
+setup_grub() {
+  log_info "Configuring GRUB..."
+
+  local grub_file="/etc/default/grub"
+
+  if [[ -f "$grub_file" ]]; then
+    sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=1/' "$grub_file"
+    if grep -q "^#GRUB_DISABLE_OS_PROBER=true" "$grub_file"; then
+      sudo sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' "$grub_file"
+    elif ! grep -q "GRUB_DISABLE_OS_PROBER=" "$grub_file"; then
+      echo "GRUB_DISABLE_OS_PROBER=false" | sudo tee -a "$grub_file" >/dev/null
+    fi
+
+    log_info "Updating GRUB configuration..."
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+  else
+    log_error "GRUB config file not found at $grub_file"
+  fi
+
+  log_info "Enabling cron and grub-btrfs services..."
+  sudo systemctl enable cronie
+  sudo systemctl enable grub-btrfsd
+
+  log_success "GRUB configuration complete."
+}
+
+#---------------------------------------
 # Hyprland setup
 #---------------------------------------
 setup_hyprland() {
@@ -167,7 +196,6 @@ cleanup_system() {
 setup_dotfiles() {
   log_info "Applying configuration files with stow..."
 
-  # Remove conflicting configs
   local configs=(
     "$HOME/.config/hypr"
     "$HOME/.config/mpv"
@@ -212,6 +240,7 @@ main() {
   setup_user
   create_directories
   setup_libvirt
+  setup_grub
   setup_hyprland
   setup_shell
   cleanup_system

@@ -12,6 +12,7 @@ exfatprogs
 foot
 gparted
 grim
+grub-btrfs
 gvfs-smb
 hyprcursor
 hyprgraphics
@@ -38,6 +39,7 @@ obs-studio
 openbsd-netcat
 pamixer
 pavucontrol
+pfetch-rs-bin
 playerctl
 pnpm
 polkit-gnome
@@ -52,6 +54,7 @@ stow
 swaybg
 swayosd
 telegram-desktop
+timeshift
 tofi
 tree
 ttf-cascadia-mono-nerd
