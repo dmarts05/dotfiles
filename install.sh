@@ -117,6 +117,15 @@ setup_docker() {
 }
 
 #---------------------------------------
+# CUPS setup
+#---------------------------------------
+setup_cups() {
+  log_info "Enabling CUPS printing service..."
+  sudo systemctl enable --now cups
+  log_success "CUPS service enabled."
+}
+
+#---------------------------------------
 # Directory setup
 #---------------------------------------
 create_directories() {
@@ -281,6 +290,7 @@ main() {
 
   setup_user
   setup_docker
+  setup_cups
   create_directories
   setup_libvirt
   setup_grub
