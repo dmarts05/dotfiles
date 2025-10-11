@@ -1,5 +1,6 @@
 android-tools
 ark
+blueberry
 brave-bin
 breeze-icons
 bridge-utils
