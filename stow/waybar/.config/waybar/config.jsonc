@@ -5,7 +5,7 @@
     "spacing": 0,
     "height": 26,
     "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["clock", "custom/update"],
+    "modules-center": ["clock"],
     "modules-right": [
         "tray",
         "custom/layout",
@@ -41,17 +41,9 @@
         },
         "all-outputs": false
     },
-    "custom/update": {
-        "format": "",
-        "exec": "omarchy-update-available",
-        "on-click": "alacritty --class Omarchy --title Omarchy -e omarchy-update",
-        "tooltip-format": "Omarchy update available",
-        "interval": 3600
-    },
     "clock": {
         "format": "{:%d/%m/%y %R}",
-        "tooltip": false,
-        "on-click-right": "omarchy-cmd-tzupdate"
+        "tooltip": false
     },
     "network": {
         "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],

@@ -21,14 +21,18 @@ if [[ "$EUID" -eq 0 ]]; then
   exit 1
 fi
 
-if ! command -v yay &>/dev/null; then
-  log_error "yay is required but not installed."
-  exit 1
-fi
-
-if [[ ! -d "$HOME/.local/share/omarchy" ]]; then
-  log_error "Omarchy is not installed. Please install it first and rerun."
-  exit 1
+#---------------------------------------
+# Ensure paru-bin is installed
+#---------------------------------------
+if ! command -v paru &>/dev/null; then
+  log_info "paru not found. Installing paru-bin from AUR..."
+  sudo pacman -S --needed --noconfirm base-devel git
+  git clone https://aur.archlinux.org/paru-bin.git /tmp/paru-bin
+  pushd /tmp/paru-bin >/dev/null
+  makepkg -si --noconfirm
+  popd >/dev/null
+  rm -rf /tmp/paru-bin
+  log_success "paru-bin installed successfully."
 fi
 
 #---------------------------------------
@@ -53,19 +57,25 @@ choose_device() {
 #---------------------------------------
 install_packages() {
   log_info "Updating and upgrading packages..."
-  yay -Syu --noconfirm
+  paru -Syu --noconfirm
 
   log_info "Installing base packages..."
-  yay -S --noconfirm --needed base-devel git wget curl
+  paru -S --noconfirm --needed base-devel git wget curl
 
   log_info "Installing app packages from packages.txt..."
-  yay -S --noconfirm --needed - < packages.txt
+  paru -S --noconfirm --needed - < packages.txt
 }
 
 install_vm_packages() {
   log_info "Installing VM guest packages..."
-  yay -S --noconfirm --needed qemu-guest-agent spice-vdagent xf86-video-qxl
+  paru -S --noconfirm --needed qemu-guest-agent spice-vdagent xf86-video-qxl
   sudo systemctl enable qemu-guest-agent
+}
+
+install_nvidia_packages() {
+  log_info "Installing NVIDIA drivers and utilities..."
+  paru -S --noconfirm --needed nvidia nvidia-utils nvidia-settings
+  sudo systemctl enable nvidia-persistenced.service || true
 }
 
 #---------------------------------------
@@ -92,18 +102,6 @@ setup_libvirt() {
   sudo systemctl enable libvirtd virtlogd
   sudo cp -r ./replace/etc/libvirt/* /etc/libvirt/ || true
   sudo usermod -aG libvirt "$USER"
-}
-
-#---------------------------------------
-# Nautilus setup
-#---------------------------------------
-setup_nautilus() {
-  log_info "Configuring nautilus-open-any-terminal..."
-  sudo glib-compile-schemas /usr/share/glib-2.0/schemas
-  gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal alacritty
-  gsettings set com.github.stunkymonkey.nautilus-open-any-terminal keybindings '<Ctrl><Alt>t'
-  gsettings set com.github.stunkymonkey.nautilus-open-any-terminal new-tab true
-  gsettings set com.github.stunkymonkey.nautilus-open-any-terminal flatpak system
 }
 
 #---------------------------------------
@@ -142,7 +140,6 @@ setup_hyprland_device() {
   ln -sf "$env_target" "$hypr_dir/envs.conf"
 }
 
-
 #---------------------------------------
 # Shell setup
 #---------------------------------------
@@ -152,11 +149,16 @@ setup_shell() {
 }
 
 #---------------------------------------
-# Cleanup
+# Cleanup system (orphans only)
 #---------------------------------------
 cleanup_system() {
-  log_info "Removing unwanted packages..."
-  yay -Rns --noconfirm ufw-docker 1password-beta 1password-cli spotify pinta obsidian signal-desktop typora xournalpp kdenlive || true
+  log_info "Cleaning up orphaned packages..."
+  if paru -Qtdq &>/dev/null; then
+    paru -Rns --noconfirm $(paru -Qtdq)
+    log_success "Removed orphaned packages."
+  else
+    log_info "No orphaned packages to remove."
+  fi
 }
 
 #---------------------------------------
@@ -167,11 +169,14 @@ setup_dotfiles() {
 
   # Remove conflicting configs
   local configs=(
-    "$HOME/.config/alacritty"
     "$HOME/.config/hypr"
     "$HOME/.config/mpv"
-    "$HOME/.config/waybar/config.jsonc"
+    "$HOME/.config/waybar"
     "$HOME/.config/wireplumber"
+    "$HOME/.config/foot"
+    "$HOME/.config/mako"
+    "$HOME/.config/tofi"
+    "$HOME/.config/eza"
     "$HOME/.zsh"
     "$HOME/.zshrc"
     "$HOME/.config/nvim"
@@ -186,7 +191,7 @@ setup_dotfiles() {
   done
 
   pushd ./stow >/dev/null
-  stow -t ~ alacritty brave-flags.conf hypr mpv nvim spotify-launcher.conf waybar wireplumber .zsh .zshrc
+  stow -t ~ brave-flags.conf eza foot hypr mako mpv nvim spotify-launcher.conf tofi waybar wireplumber .zsh .zshrc
   popd >/dev/null
 }
 
@@ -198,11 +203,15 @@ main() {
   log_info "Device type selected: $device"
 
   install_packages
-  [[ "$device" == "vm" ]] && install_vm_packages
+
+  case "$device" in
+    vm) install_vm_packages ;;
+    desktop) install_nvidia_packages ;;
+  esac
+
   setup_user
   create_directories
   setup_libvirt
-  setup_nautilus
   setup_hyprland
   setup_shell
   cleanup_system
