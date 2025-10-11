@@ -1,3 +1,4 @@
 # Ignore symbolic links
 stow/hypr/.config/hypr/monitors.conf
 stow/hypr/.config/hypr/envs.conf
+stow/thunar/.config/Thunar/accels.scm

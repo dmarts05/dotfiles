@@ -79,11 +79,41 @@ install_nvidia_packages() {
 }
 
 #---------------------------------------
+# Git setup
+#---------------------------------------
+setup_git() {
+  local git_name="Daniel Martínez Sánchez"
+  local git_email="danielmartinezsanchez2012@gmail.com"
+
+  log_info "Configuring Git global username and email..."
+  git config --global user.name "$git_name"
+  git config --global user.email "$git_email"
+
+  log_info "Configuring Git to automatically set upstream when pushing..."
+  git config --global push.autoSetupRemote true
+
+  log_success "Git configuration complete."
+}
+
+#---------------------------------------
 # User/group setup
 #---------------------------------------
 setup_user() {
   log_info "Adding user '$USER' to common groups..."
   sudo usermod -aG video,audio,lp,scanner "$USER"
+}
+
+#---------------------------------------
+# Docker setup
+#---------------------------------------
+setup_docker() {
+  log_info "Enabling Docker service..."
+  sudo systemctl enable --now docker
+
+  log_info "Adding user '$USER' to docker group..."
+  sudo usermod -aG docker "$USER"
+
+  log_success "Docker setup complete."
 }
 
 #---------------------------------------
@@ -145,7 +175,7 @@ setup_login_manager() {
 #---------------------------------------
 # Hyprland setup
 #---------------------------------------
-setup_hyprland() {
+setup_hyprland_plugins() {
   log_info "Adding Hyprland plugins..."
   hyprpm update
   hyprpm add https://github.com/Duckonaut/split-monitor-workspaces
@@ -187,7 +217,7 @@ setup_shell() {
 }
 
 #---------------------------------------
-# Cleanup system (orphans only)
+# Cleanup system
 #---------------------------------------
 cleanup_system() {
   log_info "Cleaning up orphaned packages..."
@@ -212,6 +242,8 @@ setup_dotfiles() {
     "$HOME/.config/wireplumber"
     "$HOME/.config/foot"
     "$HOME/.config/mako"
+    "$HOME/.config/swayosd"
+    "$HOME/.config/Thunar"
     "$HOME/.config/tofi"
     "$HOME/.config/eza"
     "$HOME/.zsh"
@@ -228,7 +260,7 @@ setup_dotfiles() {
   done
 
   pushd ./stow >/dev/null
-  stow -t ~ brave-flags.conf eza foot hypr mako mpv nvim spotify-launcher.conf tofi waybar wireplumber .zsh .zshrc
+  stow -t ~ brave-flags.conf eza foot hypr mako mpv nvim spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
   popd >/dev/null
 }
 
@@ -240,6 +272,7 @@ main() {
   log_info "Device type selected: $device"
 
   install_packages
+  setup_git
 
   case "$device" in
     vm) install_vm_packages ;;
@@ -247,15 +280,16 @@ main() {
   esac
 
   setup_user
+  setup_docker
   create_directories
   setup_libvirt
   setup_grub
   setup_login_manager
-  setup_hyprland
   setup_shell
   cleanup_system
   setup_dotfiles
   setup_hyprland_device "$device"
+  setup_hyprland_plugins
 
   log_success "Installation complete! Please reboot your system."
 }
