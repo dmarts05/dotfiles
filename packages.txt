@@ -46,6 +46,7 @@ qemu
 reflector
 reflector-simple
 slurp
+smbclient
 spotify-launcher
 stow
 swaybg
