@@ -29,6 +29,7 @@ hyprutils
 hyprwayland-scanner
 libnotify
 libreoffice-fresh
+ly
 mako
 meson
 nautilus

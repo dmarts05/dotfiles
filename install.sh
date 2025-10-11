@@ -134,6 +134,15 @@ setup_grub() {
 }
 
 #---------------------------------------
+# Login manager setup
+#---------------------------------------
+setup_login_manager() {
+  log_info "Enabling login manager..."
+  sudo systemctl enable ly
+  log_success "Login manager enabled."
+}
+
+#---------------------------------------
 # Hyprland setup
 #---------------------------------------
 setup_hyprland() {
@@ -241,6 +250,7 @@ main() {
   create_directories
   setup_libvirt
   setup_grub
+  setup_login_manager
   setup_hyprland
   setup_shell
   cleanup_system
