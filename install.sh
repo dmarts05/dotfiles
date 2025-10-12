@@ -126,6 +126,26 @@ setup_cups() {
 }
 
 #---------------------------------------
+# Auto CPU Frequency setup
+#---------------------------------------
+setup_auto_cpufreq() {
+  log_info "Installing auto-cpufreq for laptop power management..."
+
+  local tmpdir
+  tmpdir=$(mktemp -d)
+  git clone https://github.com/AdnanHodzic/auto-cpufreq.git "$tmpdir/auto-cpufreq"
+  pushd "$tmpdir/auto-cpufreq" >/dev/null
+
+  sudo ./auto-cpufreq-installer
+  sudo auto-cpufreq --install
+
+  popd >/dev/null
+  rm -rf "$tmpdir"
+
+  log_success "auto-cpufreq installed successfully."
+}
+
+#---------------------------------------
 # Directory setup
 #---------------------------------------
 create_directories() {
@@ -288,6 +308,7 @@ main() {
   case "$device" in
     vm) install_vm_packages ;;
     desktop) install_nvidia_packages ;;
+    laptop) setup_auto_cpufreq ;;
   esac
 
   setup_user
