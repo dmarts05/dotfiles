@@ -251,6 +251,7 @@ setup_dotfiles() {
     "$HOME/.config/waybar"
     "$HOME/.config/wireplumber"
     "$HOME/.config/foot"
+    "$HOME/.config/kwalletrc"
     "$HOME/.config/mako"
     "$HOME/.config/swayosd"
     "$HOME/.config/Thunar"
@@ -270,7 +271,7 @@ setup_dotfiles() {
   done
 
   pushd ./stow >/dev/null
-  stow -t ~ brave-flags.conf eza foot hypr mako mpv nvim spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
+  stow -t ~ brave-flags.conf eza foot kwalletrc hypr mako mpv nvim spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
   popd >/dev/null
 }
 

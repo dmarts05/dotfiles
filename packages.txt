@@ -16,6 +16,7 @@ exfatprogs
 eza
 foot
 github-cli
+gnome-keyring
 gnome-themes-extra
 gparted
 grim
@@ -36,6 +37,7 @@ hyprsunset
 hyprutils
 hyprwayland-scanner
 kvantum
+kwalletmanager
 libnotify
 libreoffice-fresh
 ly
