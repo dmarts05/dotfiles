@@ -65,7 +65,7 @@ spotify-launcher
 stow
 swaybg
 swayosd
-system-config-printer 
+system-config-printer
 telegram-desktop
 thunar
 thunar-archive-plugin

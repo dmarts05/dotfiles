@@ -131,6 +131,7 @@ setup_cups() {
 create_directories() {
   log_info "Creating directories..."
   mkdir -p "$HOME"/{Documents,Downloads,Pictures,Videos,Music,Projects}
+  xdg-user-dirs-update
 }
 
 #---------------------------------------
