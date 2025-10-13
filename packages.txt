@@ -51,6 +51,7 @@ npm
 nwg-look
 obs-studio
 openbsd-netcat
+os-prober
 pamixer
 pavucontrol
 pfetch-rs-bin

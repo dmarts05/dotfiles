@@ -173,10 +173,15 @@ setup_grub() {
   local grub_file="/etc/default/grub"
 
   if [[ -f "$grub_file" ]]; then
+    # Set GRUB timeout to 1 second
     sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=1/' "$grub_file"
-    if grep -q "^#GRUB_DISABLE_OS_PROBER=true" "$grub_file"; then
-      sudo sed -i 's/^#GRUB_DISABLE_OS_PROBER=true/GRUB_DISABLE_OS_PROBER=false/' "$grub_file"
-    elif ! grep -q "GRUB_DISABLE_OS_PROBER=" "$grub_file"; then
+
+    # Enable OS prober (handle both commented true/false cases or missing line)
+    if grep -Eq "^#GRUB_DISABLE_OS_PROBER=(true|false)" "$grub_file"; then
+      sudo sed -i 's/^#GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' "$grub_file"
+    elif grep -Eq "^GRUB_DISABLE_OS_PROBER=.*" "$grub_file"; then
+      sudo sed -i 's/^GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' "$grub_file"
+    else
       echo "GRUB_DISABLE_OS_PROBER=false" | sudo tee -a "$grub_file" >/dev/null
     fi
 
