@@ -45,8 +45,10 @@ mako
 meson
 neovim
 nodejs
+noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
+noto-fonts-extra
 npm
 nwg-look
 obs-studio
@@ -76,6 +78,8 @@ timeshift
 tofi
 tree
 ttf-cascadia-mono-nerd
+ttf-dejavu
+ttf-liberation
 unrar
 unzip
 uv
