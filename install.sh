@@ -55,6 +55,12 @@ choose_device() {
 #---------------------------------------
 # Package installation
 #---------------------------------------
+enable_multilib() {
+  log_info "Enabling multilib repository..."
+  sudo sed -i '/^\[multilib\]/{n;s/^#//;}' /etc/pacman.conf
+  sudo pacman -Sy --noconfirm
+}
+
 install_packages() {
   log_info "Updating and upgrading packages..."
   paru -Syu --noconfirm
@@ -307,6 +313,7 @@ main() {
   device=$(choose_device)
   log_info "Device type selected: $device"
 
+  enable_multilib
   install_packages
   setup_git
 
