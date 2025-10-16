@@ -65,6 +65,7 @@ qbittorrent
 qemu
 reflector
 reflector-simple
+satty
 slurp
 smbclient
 spotify-launcher
