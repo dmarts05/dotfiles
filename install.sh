@@ -57,7 +57,7 @@ choose_device() {
 #---------------------------------------
 enable_multilib() {
   log_info "Enabling multilib repository..."
-  sudo sed -i '/^\[multilib\]/{n;s/^#//;}' /etc/pacman.conf
+  sudo sed -i '/^\s*#\[multilib\]/,/^\s*#Include/s/^#//' /etc/pacman.conf
   sudo pacman -Sy --noconfirm
 }
 
