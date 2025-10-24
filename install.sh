@@ -139,16 +139,21 @@ setup_auto_cpufreq() {
 
   local tmpdir
   tmpdir=$(mktemp -d)
-  git clone https://github.com/AdnanHodzic/auto-cpufreq.git "$tmpdir/auto-cpufreq"
+  git clone --depth=1 https://github.com/AdnanHodzic/auto-cpufreq.git "$tmpdir/auto-cpufreq"
   pushd "$tmpdir/auto-cpufreq" >/dev/null
 
+  if systemctl is-active --quiet auto-cpufreq.service; then
+    log_info "Stopping running auto-cpufreq service..."
+    sudo systemctl stop auto-cpufreq.service
+  fi
+
   sudo ./auto-cpufreq-installer
-  sudo auto-cpufreq --install
+  sudo systemctl enable --now auto-cpufreq.service
 
   popd >/dev/null
   rm -rf "$tmpdir"
 
-  log_success "auto-cpufreq installed successfully."
+  log_success "auto-cpufreq installed and service started successfully."
 }
 
 #---------------------------------------
@@ -218,10 +223,23 @@ setup_login_manager() {
 #---------------------------------------
 setup_hyprland_plugins() {
   log_info "Adding Hyprland plugins..."
+
+  local plugin_url="https://github.com/Duckonaut/split-monitor-workspaces"
+  local plugin_name="split-monitor-workspaces"
+
   hyprpm update
-  hyprpm add https://github.com/Duckonaut/split-monitor-workspaces
-  hyprpm enable split-monitor-workspaces
+
+  if hyprpm list | grep -q "$plugin_name"; then
+    log_info "Plugin '$plugin_name' already installed, skipping add."
+  else
+    hyprpm add "$plugin_url"
+  fi
+
+  hyprpm enable "$plugin_name" || log_warn "Plugin '$plugin_name' already enabled."
+
   hyprpm reload
+
+  log_success "Hyprland plugin setup completed."
 }
 
 setup_hyprland_device() {

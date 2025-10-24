@@ -22,7 +22,6 @@ gparted
 grim
 grub-btrfs
 gvfs-smb
-heroic-games-launcher
 htop
 hyprcursor
 hyprgraphics
@@ -69,7 +68,6 @@ satty
 slurp
 smbclient
 spotify-launcher
-steam
 stow
 swaybg
 swayosd
