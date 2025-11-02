@@ -81,6 +81,7 @@ tree
 ttf-cascadia-mono-nerd
 ttf-dejavu
 ttf-liberation
+tumbler
 unrar
 unzip
 uv
