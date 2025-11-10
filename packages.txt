@@ -11,6 +11,8 @@ dbeaver
 discord
 dnsmasq
 docker
+docker-buildx
+docker-compose
 etcher-bin
 exfatprogs
 eza
