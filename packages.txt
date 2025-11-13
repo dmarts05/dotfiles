@@ -43,6 +43,7 @@ libreoffice-fresh
 ly
 mako
 meson
+mpv
 neovim
 nodejs
 noto-fonts
