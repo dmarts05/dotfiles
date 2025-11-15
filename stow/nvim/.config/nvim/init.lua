@@ -16,6 +16,10 @@ vim.keymap.set({ "n", "i", "v" }, "<C-s>", function()
   vim.cmd.write()
 end, { desc = "Save file" })
 
+-- Make j/k move by *display* lines instead of real lines
+vim.keymap.set("n", "j", "gj", { noremap = true, silent = true })
+vim.keymap.set("n", "k", "gk", { noremap = true, silent = true })
+
 -- Lazy.nvim setup
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
