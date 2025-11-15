@@ -2,7 +2,6 @@ android-tools
 ark
 blueberry
 brave-bin
-breeze-icons
 bridge-utils
 brother-dcpl2520dw
 bun-bin
@@ -51,6 +50,7 @@ noto-fonts-cjk
 noto-fonts-emoji
 noto-fonts-extra
 npm
+numix-icon-theme-git
 nwg-look
 obs-studio
 openbsd-netcat
