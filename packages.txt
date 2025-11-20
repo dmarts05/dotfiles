@@ -92,6 +92,7 @@ virt-manager
 virt-viewer
 visual-studio-code-bin
 waybar
+wireguard-tools
 wl-clipboard
 wl-clip-persist
 xcursor-pro-cursor-theme
