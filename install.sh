@@ -85,6 +85,24 @@ install_nvidia_packages() {
 }
 
 #---------------------------------------
+# Flatpak setup
+#---------------------------------------
+setup_flatpak() {
+    log_info "Installing Flatpak infrastructure..."
+    paru -S --noconfirm --needed flatpak
+
+    log_info "Adding Flathub remote..."
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+    if [[ -f "flatpaks.txt" ]]; then
+        log_info "Installing Flatpak packages from flatpaks.txt..."
+        xargs -a flatpaks.txt flatpak install -y flathub
+    else
+        log_info "flatpaks.txt not found, skipping Flatpak package installation."
+    fi
+}
+
+#---------------------------------------
 # Git setup
 #---------------------------------------
 setup_git() {
@@ -184,10 +202,8 @@ setup_grub() {
     local grub_file="/etc/default/grub"
     
     if [[ -f "$grub_file" ]]; then
-        # Set GRUB timeout to 1 second
         sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=1/' "$grub_file"
         
-        # Enable OS prober (handle both commented true/false cases or missing line)
         if grep -Eq "^#GRUB_DISABLE_OS_PROBER=(true|false)" "$grub_file"; then
             sudo sed -i 's/^#GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' "$grub_file"
             elif grep -Eq "^GRUB_DISABLE_OS_PROBER=.*" "$grub_file"; then
@@ -333,6 +349,7 @@ main() {
     
     enable_multilib
     install_packages
+    setup_flatpak
     setup_git
     
     case "$device" in
