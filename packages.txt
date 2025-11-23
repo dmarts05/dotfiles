@@ -73,6 +73,7 @@ stow
 swaybg
 swayosd
 system-config-printer
+tailscale
 telegram-desktop
 thunar
 thunar-archive-plugin
