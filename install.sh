@@ -325,30 +325,6 @@ setup_dotfiles() {
 }
 
 #---------------------------------------
-# DNS configuration
-#---------------------------------------
-setup_dns() {
-    local dns_conf="/etc/NetworkManager/conf.d/dns.conf"
-    
-    log_info "Configuring global DNS for NetworkManager..."
-    
-    # Create directory if missing
-    sudo mkdir -p /etc/NetworkManager/conf.d
-    
-    # Write DNS configuration
-  sudo tee "$dns_conf" >/dev/null <<EOF
-[global-dns-domain-*]
-servers=1.1.1.1,1.0.0.1
-EOF
-    
-    # Restart NetworkManager to apply changes
-    sudo systemctl restart NetworkManager
-    
-    log_success "DNS configuration applied: 1.1.1.1, 1.0.0.1"
-}
-
-
-#---------------------------------------
 # Main flow
 #---------------------------------------
 main() {
@@ -368,7 +344,6 @@ main() {
     setup_user
     setup_docker
     setup_cups
-    setup_dns
     create_directories
     setup_libvirt
     setup_grub
