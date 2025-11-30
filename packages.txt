@@ -39,6 +39,8 @@ kvantum
 kwalletmanager
 libnotify
 libreoffice-fresh
+linux
+linux-headers
 ly
 mako
 meson
