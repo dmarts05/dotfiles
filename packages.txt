@@ -98,7 +98,6 @@ waybar
 wireguard-tools
 wl-clipboard
 wl-clip-persist
-wlr-randr 
 xcursor-pro-cursor-theme
 xcursor-pro-hyprcursor
 xdg-desktop-portal-hyprland

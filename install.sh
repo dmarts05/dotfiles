@@ -166,7 +166,6 @@ setup_auto_cpufreq() {
     fi
     
     sudo ./auto-cpufreq-installer
-    sudo systemctl enable --now auto-cpufreq.service
     
     popd >/dev/null
     rm -rf "$tmpdir"
