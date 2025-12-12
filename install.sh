@@ -229,7 +229,7 @@ setup_grub() {
 #---------------------------------------
 setup_login_manager() {
     log_info "Enabling login manager..."
-    sudo systemctl enable ly
+    sudo systemctl enable ly@tty1.service
     log_success "Login manager enabled."
 }
 
