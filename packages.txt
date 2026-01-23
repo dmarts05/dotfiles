@@ -1,7 +1,6 @@
 android-tools
 ark
 blueberry
-brave-bin
 bridge-utils
 brother-dcpl2520dw
 bun-bin
@@ -23,6 +22,7 @@ gparted
 grim
 grub-btrfs
 gvfs-smb
+helium-browser-bin
 htop
 hyprcursor
 hyprgraphics

@@ -85,24 +85,6 @@ install_nvidia_packages() {
 }
 
 #---------------------------------------
-# Flatpak setup
-#---------------------------------------
-setup_flatpak() {
-    log_info "Installing Flatpak infrastructure..."
-    paru -S --noconfirm --needed flatpak
-
-    log_info "Adding Flathub remote..."
-    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-
-    if [[ -f "flatpaks.txt" ]]; then
-        log_info "Installing Flatpak packages from flatpaks.txt..."
-        xargs -a flatpaks.txt flatpak install -y flathub
-    else
-        log_info "flatpaks.txt not found, skipping Flatpak package installation."
-    fi
-}
-
-#---------------------------------------
 # Git setup
 #---------------------------------------
 setup_git() {
@@ -328,14 +310,13 @@ setup_dotfiles() {
         "$HOME/.local/state/nvim"
         "$HOME/.cache/nvim"
         "$HOME/.config/spotify-launcher.conf"
-        "$HOME/.config/brave-flags.conf"
     )
     for c in "${configs[@]}"; do
         rm -rf "$c"
     done
     
     pushd ./stow >/dev/null
-    stow -t ~ brave-flags.conf eza foot kwalletrc hypr mako mpv nvim spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
+    stow -t ~ eza foot kwalletrc hypr mako mpv nvim spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
     popd >/dev/null
 }
 
@@ -348,7 +329,6 @@ main() {
     
     enable_multilib
     install_packages
-    setup_flatpak
     setup_git
     
     case "$device" in
