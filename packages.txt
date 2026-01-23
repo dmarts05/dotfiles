@@ -3,7 +3,7 @@ ark
 blueberry
 bridge-utils
 brother-dcpl2520dw
-bun-bin
+bun
 cmake
 dbeaver
 discord
