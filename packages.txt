@@ -67,6 +67,7 @@ qbittorrent
 qemu
 reflector
 reflector-simple
+runapp
 satty
 slurp
 smbclient
