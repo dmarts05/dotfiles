@@ -65,6 +65,7 @@ pnpm
 polkit-gnome
 qbittorrent
 qemu
+qt6ct
 reflector
 reflector-simple
 runapp
