@@ -15,12 +15,14 @@ etcher-bin
 exfatprogs
 eza
 foot
+freerdp
 github-cli
 gnome-keyring
 gnome-themes-extra
 gparted
 grim
 grub-btrfs
+gtk-vnc
 gvfs-smb
 helium-browser-bin
 htop
@@ -46,6 +48,7 @@ mako
 meson
 mpv
 neovim
+networkmanager-openvpn 
 nodejs
 noto-fonts
 noto-fonts-cjk
@@ -68,10 +71,12 @@ qemu
 qt6ct
 reflector
 reflector-simple
+remmina
 runapp
 satty
 slurp
 smbclient
+spice-gtk
 spotify-launcher
 stow
 swaybg
