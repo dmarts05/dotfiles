@@ -45,6 +45,7 @@ awful.rules.rules = {
       end
     },
     { rule = { class = "Steam", name = "Friends List" }, properties = { floating = true, width = 460, height = 800 } },
+    { rule = { instance = "web.whatsapp.com" }, properties = { floating = false } },
 }
 
 awful.layout.layouts = {
