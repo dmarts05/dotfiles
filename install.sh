@@ -292,16 +292,20 @@ setup_dotfiles() {
     log_info "Applying configuration files with stow..."
     
     local configs=(
+        "$HOME/.config/awesome"
         "$HOME/.config/hypr"
+        "$HOME/.config/autorandr"
         "$HOME/.config/mpv"
         "$HOME/.config/waybar"
         "$HOME/.config/wireplumber"
         "$HOME/.config/foot"
+        "$HOME/.config/alacritty"
         "$HOME/.config/kwalletrc"
         "$HOME/.config/mako"
         "$HOME/.config/swayosd"
         "$HOME/.config/Thunar"
         "$HOME/.config/tofi"
+        "$HOME/.config/rofi"
         "$HOME/.config/eza"
         "$HOME/.zsh"
         "$HOME/.zshrc"
@@ -316,7 +320,7 @@ setup_dotfiles() {
     done
     
     pushd ./stow >/dev/null
-    stow -t ~ eza foot kwalletrc hypr mako mpv nvim spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
+    stow -t ~ alacritty autorandr awesome eza foot kwalletrc hypr mako mpv nvim rofi spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
     popd >/dev/null
 }
 
