@@ -13,12 +13,10 @@ local function run_once(cmd)
 end
 
 -- Display and Input Setup
-awful.spawn.with_shell("autorandr --change")
-awful.spawn.with_shell("xsetroot -cursor_name left_ptr")
 awful.spawn.with_shell("numlockx on")
 
 -- Services
 run_once("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
 run_once("gnome-keyring-daemon -sd")
 run_once("xss-lock -- " .. config.apps.lock .. " -n")
-run_once("xautolock -time 15 -locker 'systemctl suspend'")
+run_once("xidlehook --not-when-audio --timer 900 'systemctl suspend' ''")

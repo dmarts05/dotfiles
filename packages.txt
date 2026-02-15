@@ -2,7 +2,6 @@ alacritty
 android-tools
 arandr
 ark
-autorandr
 awesome
 blueberry
 bridge-utils
@@ -115,12 +114,12 @@ waybar
 wireguard-tools
 wl-clipboard
 wl-clip-persist
-xautolock
 xcursor-pro-cursor-theme
 xcursor-pro-hyprcursor
 xdg-desktop-portal-hyprland
 xdg-user-dirs
 xdg-user-dirs-gtk
+xidlehook
 xorg
 xsel
 xss-lock
