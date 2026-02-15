@@ -1,7 +1,6 @@
 local theme_assets = require("beautiful.theme_assets")
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
-local wibox = require("wibox")
 
 local theme = dofile(themes_path .. "default/theme.lua")
 
@@ -27,10 +26,13 @@ theme.wibar_fg = theme.fg_normal
 
 -- Systray
 theme.systray_icon_spacing = 10
-theme.bg_systray = theme.bg_normal -- [FIX] Forces systray to use bar background
+theme.bg_systray = theme.bg_normal
 
--- Wallpaper
-theme.wallpaper = string.format("%s/.config/awesome/wallpaper.jpg", os.getenv("HOME"))
+theme.useless_gap = 5
+theme.gap_single_client = true
+
+local config_dir = gfs.get_configuration_dir()
+theme.wallpaper = config_dir .. "wallpaper.jpg"
 
 theme.icon_theme = "Numix"
 theme.awesome_icon = theme_assets.awesome_icon(24, theme.fg_normal, theme.bg_normal)

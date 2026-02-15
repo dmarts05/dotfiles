@@ -1,0 +1,188 @@
+local gears = require("gears")
+local awful = require("awful")
+local hotkeys_popup = require("awful.hotkeys_popup")
+local config = require("config")
+local osd = require("ui.notifications")
+
+local modkey = config.modkey
+local apps = config.apps
+
+-- Global Keys
+local globalkeys = gears.table.join(
+    -- Apps
+    awful.key({ modkey }, "Return", function() awful.spawn(apps.terminal) end),
+    awful.key({ modkey }, "space", function() awful.spawn(apps.launcher) end),
+    awful.key({ modkey }, "b", function() awful.spawn(apps.browser) end),
+    awful.key({ modkey }, "f", function() awful.spawn(apps.file_manager) end),
+    awful.key({ modkey }, "m", function() awful.spawn(apps.music) end),
+    awful.key({ modkey }, "d", function() awful.spawn(apps.discord) end),
+    awful.key({ modkey }, "g", function() awful.spawn(apps.whatsapp) end),
+
+    -- System
+    awful.key({ modkey, config.ctrlkey }, "r", awesome.restart),
+    awful.key({ modkey, config.shiftkey }, "q", awesome.quit),
+    awful.key({ modkey, config.ctrlkey }, "q", function() awful.spawn("systemctl poweroff") end),
+    awful.key({ modkey, config.ctrlkey }, "n", function() awful.spawn.with_shell("pgrep -x redshift && pkill redshift || redshift -P -O 4500") end),
+    awful.key({}, "Print", function() awful.spawn(apps.screenshot) end),
+    awful.key({ config.shiftkey }, "Print", function() awful.spawn(apps.screenshot_full) end),
+    
+    -- Auto-Suspend Toggle
+    awful.key({ modkey }, "i", function ()
+        awful.spawn.easy_async_with_shell("pgrep xautolock", function(stdout)
+            if stdout ~= "" then
+                awful.spawn("pkill xautolock")
+                osd.notify_osd("System", "Auto-suspend DISABLED", "dialog-information")
+            else
+                awful.spawn("xautolock -time 15 -locker 'systemctl suspend'")
+                osd.notify_osd("System", "Auto-suspend ENABLED (15m)", "dialog-information")
+            end
+        end)
+    end),
+
+    -- Audio
+    awful.key({}, "XF86AudioRaiseVolume", function()
+        awful.spawn.easy_async("pamixer -i 5", function()
+            awful.spawn.easy_async("pamixer --get-volume", function(stdout)
+                local vol = tonumber(stdout)
+                osd.notify_osd("Volume", vol .. "%", "audio-volume-high", vol)
+            end)
+        end)
+    end),
+    awful.key({}, "XF86AudioLowerVolume", function()
+        awful.spawn.easy_async("pamixer -d 5", function()
+            awful.spawn.easy_async("pamixer --get-volume", function(stdout)
+                local vol = tonumber(stdout)
+                osd.notify_osd("Volume", vol .. "%", "audio-volume-low", vol)
+            end)
+        end)
+    end),
+    awful.key({}, "XF86AudioMute", function()
+        awful.spawn.easy_async("pamixer -t", function()
+            awful.spawn.easy_async("pamixer --get-mute", function(stdout)
+                local is_muted = stdout:match("true")
+                local icon = is_muted and "audio-volume-muted" or "audio-volume-high"
+                local text = is_muted and "Muted" or "Unmuted"
+                osd.notify_osd("Volume", text, icon)
+            end)
+        end)
+    end),
+    awful.key({}, "XF86AudioMicMute", function() 
+        awful.spawn("pamixer --default-source -t") 
+        osd.notify_osd("Microphone", "Toggle Mute", "microphone-sensitivity-medium")
+    end),
+
+    -- Media
+    awful.key({}, "XF86AudioPlay", function()
+        awful.spawn.with_shell("playerctl play-pause")
+        awful.spawn.easy_async("playerctl metadata --format '{{title}} - {{artist}}'", function(stdout)
+            osd.notify_osd("Media", stdout:gsub("\n", ""), "media-playback-start")
+        end)
+    end),
+    awful.key({}, "XF86AudioNext", function()
+        awful.spawn.with_shell("playerctl next")
+        awful.spawn.easy_async("playerctl metadata --format '{{title}} - {{artist}}'", function(stdout)
+            osd.notify_osd("Next Track", stdout:gsub("\n", ""), "media-skip-forward")
+        end)
+    end),
+    awful.key({}, "XF86AudioPrev", function()
+        awful.spawn.with_shell("playerctl previous")
+        awful.spawn.easy_async("playerctl metadata --format '{{title}} - {{artist}}'", function(stdout)
+            osd.notify_osd("Previous Track", stdout:gsub("\n", ""), "media-skip-backward")
+        end)
+    end),
+    awful.key({}, "XF86AudioStop", function() 
+        awful.spawn("playerctl stop") 
+        osd.notify_osd("Media", "Stopped", "media-playback-stop")
+    end),
+
+    -- Brightness
+    awful.key({}, "XF86MonBrightnessUp", function()
+        awful.spawn.easy_async("brightnessctl set 5%+", function()
+            awful.spawn.easy_async("brightnessctl m", function(max_out)
+                local max = tonumber(max_out)
+                awful.spawn.easy_async("brightnessctl g", function(curr_out)
+                    local curr = tonumber(curr_out)
+                    if max and curr then
+                        local percent = math.floor((curr / max) * 100)
+                        osd.notify_osd("Brightness", percent .. "%", "display-brightness", percent)
+                    end
+                end)
+            end)
+        end)
+    end),
+    awful.key({}, "XF86MonBrightnessDown", function()
+        awful.spawn.easy_async("brightnessctl set 5%-", function()
+            awful.spawn.easy_async("brightnessctl m", function(max_out)
+                local max = tonumber(max_out)
+                awful.spawn.easy_async("brightnessctl g", function(curr_out)
+                    local curr = tonumber(curr_out)
+                    if max and curr then
+                        local percent = math.floor((curr / max) * 100)
+                        osd.notify_osd("Brightness", percent .. "%", "display-brightness", percent)
+                    end
+                end)
+            end)
+        end)
+    end),
+
+    -- Client Focus & Movement
+    awful.key({ modkey }, "h", function() awful.client.focus.bydirection("left") end),
+    awful.key({ modkey }, "l", function() awful.client.focus.bydirection("right") end),
+    awful.key({ modkey }, "k", function() awful.client.focus.bydirection("up") end),
+    awful.key({ modkey }, "j", function() awful.client.focus.bydirection("down") end),
+    awful.key({ modkey }, "Left", function() awful.client.focus.bydirection("left") end),
+    awful.key({ modkey }, "Right", function() awful.client.focus.bydirection("right") end),
+    awful.key({ modkey }, "Up", function() awful.client.focus.bydirection("up") end),
+    awful.key({ modkey }, "Down", function() awful.client.focus.bydirection("down") end),
+
+    awful.key({ modkey, config.ctrlkey }, "h", function() awful.client.swap.bydirection("left") end),
+    awful.key({ modkey, config.ctrlkey }, "l", function() awful.client.swap.bydirection("right") end),
+    awful.key({ modkey, config.ctrlkey }, "k", function() awful.client.swap.bydirection("up") end),
+    awful.key({ modkey, config.ctrlkey }, "j", function() awful.client.swap.bydirection("down") end),
+    awful.key({ modkey, config.ctrlkey }, "Left", function() awful.client.swap.bydirection("left") end),
+    awful.key({ modkey, config.ctrlkey }, "Right", function() awful.client.swap.bydirection("right") end),
+    awful.key({ modkey, config.ctrlkey }, "Up", function() awful.client.swap.bydirection("up") end),
+    awful.key({ modkey, config.ctrlkey }, "Down", function() awful.client.swap.bydirection("down") end),
+
+    awful.key({ modkey, config.shiftkey }, "h", function() awful.tag.incmwfact(-0.05) end),
+    awful.key({ modkey, config.shiftkey }, "l", function() awful.tag.incmwfact(0.05) end),
+    awful.key({ modkey, config.shiftkey }, "k", function() awful.client.incwfact(0.05) end),
+    awful.key({ modkey, config.shiftkey }, "j", function() awful.client.incwfact(-0.05) end),
+    awful.key({ modkey, config.shiftkey }, "Left", function() awful.tag.incmwfact(-0.05) end),
+    awful.key({ modkey, config.shiftkey }, "Right", function() awful.tag.incmwfact(0.05) end),
+    awful.key({ modkey, config.shiftkey }, "Up", function() awful.client.incwfact(0.05) end),
+    awful.key({ modkey, config.shiftkey }, "Down", function() awful.client.incwfact(-0.05) end)
+)
+
+-- Tag Keys
+for i = 1, 9 do
+    globalkeys = gears.table.join(globalkeys,
+        awful.key({ modkey }, "#" .. i + 9, function()
+            local screen = awful.screen.focused()
+            local tag = screen.tags[i]
+            if tag then tag:view_only() end
+        end),
+        awful.key({ modkey, config.shiftkey }, "#" .. i + 9, function()
+            if client.focus then
+                local tag = client.focus.screen.tags[i]
+                if tag then client.focus:move_to_tag(tag) end
+            end
+        end)
+    )
+end
+
+root.keys(globalkeys)
+
+-- Client Buttons
+return gears.table.join(
+    awful.button({}, 1, function(c) c:emit_signal("request::activate", "mouse_click", {raise = true}) end),
+    awful.button({ modkey }, 1, function(c)
+        c:emit_signal("request::activate", "mouse_click", {raise = true})
+        awful.mouse.client.move(c)
+    end),
+    awful.button({ modkey }, 3, function(c)
+        c:emit_signal("request::activate", "mouse_click", {raise = true})
+        awful.mouse.client.resize(c)
+    end),
+    awful.button({ modkey }, 2, function(c) awful.client.floating.toggle(c) end)
+)
