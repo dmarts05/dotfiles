@@ -80,7 +80,7 @@ install_vm_packages() {
 
 install_nvidia_packages() {
     log_info "Installing NVIDIA drivers and utilities..."
-    paru -S --noconfirm --needed nvidia nvidia-utils nvidia-settings
+    paru -S --noconfirm --needed nvidia-open nvidia-utils nvidia-settings
     sudo systemctl enable nvidia-persistenced.service || true
 }
 
@@ -264,6 +264,28 @@ setup_hyprland_device() {
     ln -sf "$env_target" "$hypr_dir/envs.conf"
 }
 
+setup_awesome_device() {
+    local device="$1"
+    local awesome_dir="$HOME/.config/awesome"
+    local monitor_target env_target
+    
+    case "$device" in
+        desktop|vm)
+            env_target="$awesome_dir/envs/desktop.lua"
+        ;;
+        laptop)
+            env_target="$awesome_dir/envs/laptop.lua"
+        ;;
+        *)
+            log_error "Unknown device: $device"
+            return 1
+        ;;
+    esac
+    
+    log_info "Linking Awesome configs for $device..."
+    ln -sf "$env_target" "$awesome_dir/envs.lua"
+}
+
 #---------------------------------------
 # Shell setup
 #---------------------------------------
@@ -353,6 +375,7 @@ main() {
     setup_dotfiles
     setup_hyprland_device "$device"
     setup_hyprland_plugins
+    setup_awesome_device "$device"
     
     log_success "Installation complete! Please reboot your system."
 }

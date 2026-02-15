@@ -55,7 +55,7 @@ mako
 meson
 mpv
 neovim
-networkmanager-openvpn 
+networkmanager-openvpn
 nodejs
 noto-fonts
 noto-fonts-cjk

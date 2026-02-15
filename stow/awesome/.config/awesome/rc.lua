@@ -6,7 +6,7 @@ local beautiful = require("beautiful")
 beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
 
 -- Load Modules
-require("env")               -- Environment Variables
+require("envs")               -- Environment Variables
 require("bindings")          -- Keys/Mouse Bindings
 require("rules")             -- Rules & Layouts
 require("ui.notifications")  -- UI Logic
