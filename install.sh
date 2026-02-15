@@ -209,12 +209,28 @@ setup_grub() {
 #---------------------------------------
 # Xorg Input setup
 #---------------------------------------
+#---------------------------------------
+# Xorg Input setup
+#---------------------------------------
 setup_xorg_input() {
-    log_info "Configuring Xorg input devices (Mouse & Touchpad)..."
+    log_info "Configuring Xorg input devices (Keyboard, Mouse & Touchpad)..."
 
     if [ ! -d "/etc/X11/xorg.conf.d" ]; then
         sudo mkdir -p /etc/X11/xorg.conf.d
     fi
+
+    # Keyboard settings (Layout & Repeat Rate)
+    # We use '90-' prefix to override/merge with systemd's 00-keyboard.conf
+    cat <<EOF | sudo tee /etc/X11/xorg.conf.d/90-keyboard-custom.conf > /dev/null
+Section "InputClass"
+    Identifier "custom-keyboard-rate"
+    MatchIsKeyboard "on"
+    Option "XkbLayout" "es"
+    Option "AutoRepeat" "210 40"
+    # Optional: ensure ctrl+alt+bksp terminates X
+    Option "XkbOptions" "terminate:ctrl_alt_bksp"
+EndSection
+EOF
 
     # Mouse acceleration (Flat profile)
     cat <<EOF | sudo tee /etc/X11/xorg.conf.d/50-mouse-acceleration.conf > /dev/null

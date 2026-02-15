@@ -122,6 +122,7 @@ xdg-desktop-portal-hyprland
 xdg-user-dirs
 xdg-user-dirs-gtk
 xorg
+xsel
 xss-lock
 zip
 zsh
