@@ -14,10 +14,14 @@ glib.setenv("SDL_VIDEODRIVER", "x11", true)
 glib.setenv("QT_QPA_PLATFORMTHEME", "qt6ct", true)
 glib.setenv("QT_STYLE_OVERRIDE", "qt6ct", true)
 
--- Nvidia / Hardware Acceleration
-glib.setenv("LIBVA_DRIVER_NAME", "nvidia", true)
-glib.setenv("__GLX_VENDOR_LIBRARY_NAME", "nvidia", true)
-
 -- Cursor Theme
 glib.setenv("XCURSOR_THEME", "XCursor-Pro-Dark", true)
 glib.setenv("XCURSOR_SIZE", "20", true)
+
+-- Apps
+glib.setenv("TERMINAL", "alacritty", true)
+glib.setenv("EDITOR", "nvim", true)
+
+-- Nvidia / Hardware Acceleration
+glib.setenv("LIBVA_DRIVER_NAME", "nvidia", true)
+glib.setenv("__GLX_VENDOR_LIBRARY_NAME", "nvidia", true)

@@ -17,3 +17,7 @@ glib.setenv("QT_STYLE_OVERRIDE", "qt6ct", true)
 -- Cursor Theme
 glib.setenv("XCURSOR_THEME", "XCursor-Pro-Dark", true)
 glib.setenv("XCURSOR_SIZE", "20", true)
+
+-- Apps
+glib.setenv("TERMINAL", "alacritty", true)
+glib.setenv("EDITOR", "nvim", true)

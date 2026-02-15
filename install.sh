@@ -267,7 +267,7 @@ setup_hyprland_device() {
 setup_awesome_device() {
     local device="$1"
     local awesome_dir="$HOME/.config/awesome"
-    local monitor_target env_target
+    local env_target
     
     case "$device" in
         desktop|vm)
@@ -373,9 +373,9 @@ main() {
     setup_shell
     cleanup_system
     setup_dotfiles
+    setup_awesome_device "$device"
     setup_hyprland_device "$device"
     setup_hyprland_plugins
-    setup_awesome_device "$device"
     
     log_success "Installation complete! Please reboot your system."
 }
