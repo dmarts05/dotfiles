@@ -3,6 +3,7 @@ android-tools
 arandr
 ark
 autorandr
+awesome
 blueberry
 bridge-utils
 brightnessctl
