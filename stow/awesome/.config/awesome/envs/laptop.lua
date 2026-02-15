@@ -12,7 +12,6 @@ glib.setenv("SDL_VIDEODRIVER", "x11", true)
 
 -- Qt Theming
 glib.setenv("QT_QPA_PLATFORMTHEME", "qt6ct", true)
-glib.setenv("QT_STYLE_OVERRIDE", "qt6ct", true)
 
 -- Cursor Theme
 glib.setenv("XCURSOR_THEME", "XCursor-Pro-Dark", true)
