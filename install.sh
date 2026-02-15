@@ -80,7 +80,7 @@ install_vm_packages() {
 
 install_nvidia_packages() {
     log_info "Installing NVIDIA drivers and utilities..."
-    paru -S --noconfirm --needed nvidia nvidia-utils nvidia-settings
+    paru -S --noconfirm --needed nvidia-open nvidia-utils nvidia-settings
     sudo systemctl enable nvidia-persistenced.service || true
 }
 
@@ -264,6 +264,28 @@ setup_hyprland_device() {
     ln -sf "$env_target" "$hypr_dir/envs.conf"
 }
 
+setup_awesome_device() {
+    local device="$1"
+    local awesome_dir="$HOME/.config/awesome"
+    local env_target
+    
+    case "$device" in
+        desktop|vm)
+            env_target="$awesome_dir/envs/desktop.lua"
+        ;;
+        laptop)
+            env_target="$awesome_dir/envs/laptop.lua"
+        ;;
+        *)
+            log_error "Unknown device: $device"
+            return 1
+        ;;
+    esac
+    
+    log_info "Linking Awesome configs for $device..."
+    ln -sf "$env_target" "$awesome_dir/envs.lua"
+}
+
 #---------------------------------------
 # Shell setup
 #---------------------------------------
@@ -292,16 +314,20 @@ setup_dotfiles() {
     log_info "Applying configuration files with stow..."
     
     local configs=(
+        "$HOME/.config/awesome"
         "$HOME/.config/hypr"
+        "$HOME/.config/autorandr"
         "$HOME/.config/mpv"
         "$HOME/.config/waybar"
         "$HOME/.config/wireplumber"
         "$HOME/.config/foot"
+        "$HOME/.config/alacritty"
         "$HOME/.config/kwalletrc"
         "$HOME/.config/mako"
         "$HOME/.config/swayosd"
         "$HOME/.config/Thunar"
         "$HOME/.config/tofi"
+        "$HOME/.config/rofi"
         "$HOME/.config/eza"
         "$HOME/.zsh"
         "$HOME/.zshrc"
@@ -316,7 +342,7 @@ setup_dotfiles() {
     done
     
     pushd ./stow >/dev/null
-    stow -t ~ eza foot kwalletrc hypr mako mpv nvim spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
+    stow -t ~ alacritty autorandr awesome eza foot kwalletrc hypr mako mpv nvim rofi spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
     popd >/dev/null
 }
 
@@ -347,6 +373,7 @@ main() {
     setup_shell
     cleanup_system
     setup_dotfiles
+    setup_awesome_device "$device"
     setup_hyprland_device "$device"
     setup_hyprland_plugins
     
