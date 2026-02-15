@@ -7,7 +7,6 @@ local config = require("config")
 awful.rules.rules = {
     { rule = {},
       properties = {
-          floating = false,
           border_width = beautiful.border_width,
           border_color = beautiful.border_normal,
           focus = awful.client.focus.filter,
@@ -20,18 +19,23 @@ awful.rules.rules = {
           ),
           buttons = clientbuttons,
           screen = awful.screen.preferred,
-          placement = awful.placement.no_overlap+awful.placement.no_offscreen
+          placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+          floating = false,
+          maximized = false,
+          maximized_horizontal = false,
+          maximized_vertical = false,
       }
     },
     { rule_any = {
         class = { 
             "Arandr", "Blueman-manager", "Gpick", "Kruler", "MessageWin", 
-            "Sxiv", "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer",
+            "Sxiv", "Wpa_gui", "veromix", "xtightvncviewer",
             "blueberry" 
         },
         name = { "Event Tester" },
-        role = { "AlarmWindow", "ConfigManager", "pop-up" }
-      }, properties = { floating = true }
+        role = { "AlarmWindow", "ConfigManager", "pop-up", "GtkFileChooserDialog", "conversation" },
+        type = { "dialog" }
+      }, properties = { floating = true, placement = awful.placement.centered }
     },
     { rule = { name = "Picture-in-Picture" },
       properties = { floating = true, sticky = true, ontop = true },
