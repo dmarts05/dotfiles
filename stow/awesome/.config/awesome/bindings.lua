@@ -7,6 +7,15 @@ local osd = require("ui.notifications")
 local modkey = config.modkey
 local apps = config.apps
 
+-- Cross-screen focus helper
+local function focus_move(dir)
+    local c = client.focus
+    awful.client.focus.bydirection(dir)
+    if c == client.focus then
+        awful.screen.focus_bydirection(dir)
+    end
+end
+
 -- Global Keys
 local globalkeys = gears.table.join(
     -- Apps
@@ -126,14 +135,14 @@ local globalkeys = gears.table.join(
     end),
 
     -- Client Focus & Movement
-    awful.key({ modkey }, "h", function() awful.client.focus.bydirection("left") end),
-    awful.key({ modkey }, "l", function() awful.client.focus.bydirection("right") end),
-    awful.key({ modkey }, "k", function() awful.client.focus.bydirection("up") end),
-    awful.key({ modkey }, "j", function() awful.client.focus.bydirection("down") end),
-    awful.key({ modkey }, "Left", function() awful.client.focus.bydirection("left") end),
-    awful.key({ modkey }, "Right", function() awful.client.focus.bydirection("right") end),
-    awful.key({ modkey }, "Up", function() awful.client.focus.bydirection("up") end),
-    awful.key({ modkey }, "Down", function() awful.client.focus.bydirection("down") end),
+    awful.key({ modkey }, "h", function() focus_move("left") end),
+    awful.key({ modkey }, "l", function() focus_move("right") end),
+    awful.key({ modkey }, "k", function() focus_move("up") end),
+    awful.key({ modkey }, "j", function() focus_move("down") end),
+    awful.key({ modkey }, "Left", function() focus_move("left") end),
+    awful.key({ modkey }, "Right", function() focus_move("right") end),
+    awful.key({ modkey }, "Up", function() focus_move("up") end),
+    awful.key({ modkey }, "Down", function() focus_move("down") end),
 
     awful.key({ modkey, config.ctrlkey }, "h", function() awful.client.swap.bydirection("left") end),
     awful.key({ modkey, config.ctrlkey }, "l", function() awful.client.swap.bydirection("right") end),
