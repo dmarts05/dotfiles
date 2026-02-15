@@ -7,12 +7,18 @@ local osd = require("ui.notifications")
 local modkey = config.modkey
 local apps = config.apps
 
--- Cross-screen focus helper
+-- Cross-screen focus + Mouse warping
 local function focus_move(dir)
     local c = client.focus
     awful.client.focus.bydirection(dir)
     if c == client.focus then
         awful.screen.focus_bydirection(dir)
+    end
+    
+    -- Move cursor to center of focused client
+    if client.focus then
+        local g = client.focus:geometry()
+        mouse.coords({ x = g.x + g.width / 2, y = g.y + g.height / 2 }, true)
     end
 end
 
