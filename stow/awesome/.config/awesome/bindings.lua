@@ -15,11 +15,49 @@ local function focus_move(dir)
         awful.screen.focus_bydirection(dir)
     end
     
-    -- Move cursor to center of focused client
-    if client.focus then
-        local g = client.focus:geometry()
-        mouse.coords({ x = g.x + g.width / 2, y = g.y + g.height / 2 }, true)
+    -- Move cursor to center of the new focused client
+    gears.timer.delayed_call(function()
+        if client.focus then
+            local g = client.focus:geometry()
+            mouse.coords({ x = g.x + g.width / 2, y = g.y + g.height / 2 }, true)
+        end
+    end)
+end
+
+-- Move client to direction, or to next screen if at edge
+local function client_move(dir)
+    local c = client.focus
+    if not c then return end
+
+    -- Check if there is a client in that direction
+    awful.client.focus.bydirection(dir)
+    local new_c = client.focus
+
+    if new_c == c then
+        -- Focus didn't change, so we are at the edge.
+        -- Switch focus to the next monitor
+        awful.screen.focus_bydirection(dir)
+        local s = awful.screen.focused()
+        
+        -- If we successfully switched screens, move the window and get focus back
+        if s ~= c.screen then
+            c:move_to_screen(s)
+            client.focus = c 
+            c:raise()
+        end
+    else
+        -- Client found in direction. Restore focus to original and swap.
+        client.focus = c
+        awful.client.swap.bydirection(dir)
     end
+
+    -- Delay the mouse warp to allow layout recalculation
+    gears.timer.delayed_call(function()
+        if c and c.valid then
+            local g = c:geometry()
+            mouse.coords({ x = g.x + g.width / 2, y = g.y + g.height / 2 }, true)
+        end
+    end)
 end
 
 -- Global Keys
@@ -150,14 +188,15 @@ local globalkeys = gears.table.join(
     awful.key({ modkey }, "Up", function() focus_move("up") end),
     awful.key({ modkey }, "Down", function() focus_move("down") end),
 
-    awful.key({ modkey, config.ctrlkey }, "h", function() awful.client.swap.bydirection("left") end),
-    awful.key({ modkey, config.ctrlkey }, "l", function() awful.client.swap.bydirection("right") end),
-    awful.key({ modkey, config.ctrlkey }, "k", function() awful.client.swap.bydirection("up") end),
-    awful.key({ modkey, config.ctrlkey }, "j", function() awful.client.swap.bydirection("down") end),
-    awful.key({ modkey, config.ctrlkey }, "Left", function() awful.client.swap.bydirection("left") end),
-    awful.key({ modkey, config.ctrlkey }, "Right", function() awful.client.swap.bydirection("right") end),
-    awful.key({ modkey, config.ctrlkey }, "Up", function() awful.client.swap.bydirection("up") end),
-    awful.key({ modkey, config.ctrlkey }, "Down", function() awful.client.swap.bydirection("down") end),
+    -- Client Swapping / Monitor Moving
+    awful.key({ modkey, config.ctrlkey }, "h", function() client_move("left") end),
+    awful.key({ modkey, config.ctrlkey }, "l", function() client_move("right") end),
+    awful.key({ modkey, config.ctrlkey }, "k", function() client_move("up") end),
+    awful.key({ modkey, config.ctrlkey }, "j", function() client_move("down") end),
+    awful.key({ modkey, config.ctrlkey }, "Left", function() client_move("left") end),
+    awful.key({ modkey, config.ctrlkey }, "Right", function() client_move("right") end),
+    awful.key({ modkey, config.ctrlkey }, "Up", function() client_move("up") end),
+    awful.key({ modkey, config.ctrlkey }, "Down", function() client_move("down") end),
 
     awful.key({ modkey, config.shiftkey }, "h", function() awful.tag.incmwfact(-0.05) end),
     awful.key({ modkey, config.shiftkey }, "l", function() awful.tag.incmwfact(0.05) end),
