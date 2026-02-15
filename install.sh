@@ -207,6 +207,44 @@ setup_grub() {
 }
 
 #---------------------------------------
+# Xorg Input setup
+#---------------------------------------
+setup_xorg_input() {
+    log_info "Configuring Xorg input devices (Mouse & Touchpad)..."
+
+    if [ ! -d "/etc/X11/xorg.conf.d" ]; then
+        sudo mkdir -p /etc/X11/xorg.conf.d
+    fi
+
+    # Mouse acceleration (Flat profile)
+    cat <<EOF | sudo tee /etc/X11/xorg.conf.d/50-mouse-acceleration.conf > /dev/null
+Section "InputClass"
+    Identifier "libinput-mouse-flat-profile"
+    Driver "libinput"
+    MatchIsPointer "yes"
+    MatchIsTouchpad "no"
+    MatchIsKeyboard "no"
+    Option "AccelProfile" "flat"
+    Option "AccelSpeed" "0"
+EndSection
+EOF
+
+    # Touchpad settings
+    cat <<EOF | sudo tee /etc/X11/xorg.conf.d/50-touchpad.conf > /dev/null
+Section "InputClass"
+    Identifier "libinput-touchpad-custom"
+    Driver "libinput"
+    MatchIsTouchpad "yes"
+    Option "Tapping" "true"
+    Option "NaturalScrolling" "true"
+    Option "DisableWhileTyping" "true"
+EndSection
+EOF
+
+    log_success "Xorg input configuration applied."
+}
+
+#---------------------------------------
 # Login manager setup
 #---------------------------------------
 setup_login_manager() {
@@ -369,6 +407,7 @@ main() {
     create_directories
     setup_libvirt
     setup_grub
+    setup_xorg_input
     setup_login_manager
     setup_shell
     cleanup_system
