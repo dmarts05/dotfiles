@@ -227,7 +227,6 @@ Section "InputClass"
     MatchIsKeyboard "on"
     Option "XkbLayout" "es"
     Option "AutoRepeat" "210 40"
-    # Optional: ensure ctrl+alt+bksp terminates X
     Option "XkbOptions" "terminate:ctrl_alt_bksp"
 EndSection
 EOF

@@ -15,8 +15,6 @@ end
 -- Display and Input Setup
 awful.spawn.with_shell("autorandr --change")
 awful.spawn.with_shell("xsetroot -cursor_name left_ptr")
-awful.spawn.with_shell("setxkbmap es")
-awful.spawn.with_shell("xset r rate 210 40")
 awful.spawn.with_shell("numlockx on")
 
 -- Services
