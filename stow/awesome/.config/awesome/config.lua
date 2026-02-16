@@ -16,7 +16,7 @@ _M.apps = {
     file_manager = "thunar",
     music = "spotify-launcher",
     discord = "discord",
-    whatsapp = "helium-browser --app=https://web.whatsapp.com/",
+    whatsapp = "chromium --app=https://web.whatsapp.com/",
     screenshot = "flameshot gui",
     screenshot_full = "flameshot screen",
     lock = "i3lock -c " .. lock_color,
