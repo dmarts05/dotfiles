@@ -81,13 +81,13 @@ local globalkeys = gears.table.join(
     
     -- Auto-Suspend Toggle
     awful.key({ modkey }, "i", function ()
-        awful.spawn.easy_async_with_shell("pgrep xautolock", function(stdout)
+        awful.spawn.easy_async_with_shell("pgrep xidlehook", function(stdout)
             if stdout ~= "" then
-                awful.spawn("pkill xautolock")
+                awful.spawn("pkill xidlehook")
                 osd.notify_osd("System", "Auto-suspend DISABLED", "dialog-information")
             else
-                awful.spawn("xautolock -time 15 -locker 'systemctl suspend'")
-                osd.notify_osd("System", "Auto-suspend ENABLED (15m)", "dialog-information")
+                awful.spawn("xidlehook --not-when-audio --timer 1800 'systemctl suspend' '' &")
+                osd.notify_osd("System", "Auto-suspend ENABLED (30 min)", "dialog-information")
             end
         end)
     end),
