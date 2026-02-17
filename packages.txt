@@ -114,6 +114,7 @@ waybar
 wireguard-tools
 wl-clipboard
 wl-clip-persist
+xcolor
 xcursor-pro-cursor-theme
 xcursor-pro-hyprcursor
 xdg-desktop-portal-hyprland
