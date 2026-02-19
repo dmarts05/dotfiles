@@ -35,10 +35,24 @@ awful.rules.rules = {
         name = { "Event Tester" },
         role = { "AlarmWindow", "ConfigManager", "pop-up", "GtkFileChooserDialog", "conversation" },
         type = { "dialog" }
-      }, properties = { floating = true, placement = awful.placement.centered }
+      },
+      properties = {
+        floating = true,
+        maximized = false,
+        maximized_horizontal = false,
+        maximized_vertical = false,
+        placement = awful.placement.centered
+      }
     },
     { rule = { name = "Picture-in-Picture" },
-      properties = { floating = true, sticky = true, ontop = true },
+      properties = {
+        floating = true,
+        sticky = true,
+        ontop = true,
+        maximized = false,
+        maximized_horizontal = false,
+        maximized_vertical = false
+      },
       callback = function(c)
           c:geometry({ width = 600, height = 338 })
           awful.placement.bottom_right(c, { margins = { bottom = 40, right = 40 } })
