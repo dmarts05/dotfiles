@@ -10,6 +10,7 @@ brother-dcpl2520dw
 bun
 cmake
 dbeaver
+direnv
 discord
 dnsmasq
 docker
