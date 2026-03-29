@@ -1,5 +1,5 @@
 # Ignore symbolic links
 stow/hypr/.config/hypr/monitors.conf
-stow/hypr/.config/hypr/envs.conf
+stow/uwsm/.config/uwsm/env
 stow/awesome/.config/awesome/envs.lua
 stow/thunar/.config/Thunar/accels.scm

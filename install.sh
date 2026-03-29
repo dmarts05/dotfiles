@@ -295,16 +295,17 @@ setup_hyprland_plugins() {
 setup_hyprland_device() {
     local device="$1"
     local hypr_dir="$HOME/.config/hypr"
+    local uwsm_dir="$HOME/.config/uwsm"
     local monitor_target env_target
     
     case "$device" in
         desktop|vm)
             monitor_target="$hypr_dir/monitors/desktop.conf"
-            env_target="$hypr_dir/envs/desktop.conf"
+            env_target="$uwsm_dir/desktop"
         ;;
         laptop)
             monitor_target="$hypr_dir/monitors/laptop.conf"
-            env_target="$hypr_dir/envs/laptop.conf"
+            env_target="$uwsm_dir/laptop"
         ;;
         *)
             log_error "Unknown device: $device"
@@ -314,7 +315,7 @@ setup_hyprland_device() {
     
     log_info "Linking Hyprland configs for $device..."
     ln -sf "$monitor_target" "$hypr_dir/monitors.conf"
-    ln -sf "$env_target" "$hypr_dir/envs.conf"
+    ln -sf "$env_target" "$uwsm_dir/env"
 }
 
 setup_awesome_device() {
@@ -367,36 +368,38 @@ setup_dotfiles() {
     log_info "Applying configuration files with stow..."
     
     local configs=(
+        "$HOME/.cache/nvim"
+        "$HOME/.config/Thunar"
+        "$HOME/.config/alacritty"
         "$HOME/.config/autostart"
         "$HOME/.config/awesome"
         "$HOME/.config/btop"
-        "$HOME/.config/hypr"
-        "$HOME/.config/mpv"
-        "$HOME/.config/waybar"
-        "$HOME/.config/wireplumber"
+        "$HOME/.config/eza"
         "$HOME/.config/foot"
-        "$HOME/.config/alacritty"
+        "$HOME/.config/hypr"
         "$HOME/.config/kwalletrc"
         "$HOME/.config/mako"
-        "$HOME/.config/swayosd"
-        "$HOME/.config/Thunar"
-        "$HOME/.config/tofi"
-        "$HOME/.config/rofi"
-        "$HOME/.config/eza"
-        "$HOME/.zsh"
-        "$HOME/.zshrc"
+        "$HOME/.config/mpv"
         "$HOME/.config/nvim"
+        "$HOME/.config/rofi"
+        "$HOME/.config/spotify-launcher.conf"
+        "$HOME/.config/swayosd"
+        "$HOME/.config/tofi"
+        "$HOME/.config/uwsm"
+        "$HOME/.config/waybar"
+        "$HOME/.config/wireplumber"
         "$HOME/.local/share/nvim"
         "$HOME/.local/state/nvim"
-        "$HOME/.cache/nvim"
-        "$HOME/.config/spotify-launcher.conf"
+        "$HOME/.zsh"
+        "$HOME/.zshrc"
     )
+
     for c in "${configs[@]}"; do
         rm -rf "$c"
     done
     
     pushd ./stow >/dev/null
-    stow -t ~ alacritty autostart awesome btop eza foot kwalletrc hypr mako mpv nvim rofi spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
+    stow -t ~ alacritty autostart awesome btop eza foot hypr kwalletrc mako mpv nvim rofi spotify-launcher.conf swayosd thunar tofi uwsm waybar wireplumber .zsh .zshrc
     popd >/dev/null
 }
 
