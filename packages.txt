@@ -8,6 +8,7 @@ blueberry
 bridge-utils
 brightnessctl
 brother-dcpl2520dw
+btop
 bun
 cmake
 dbeaver
@@ -32,7 +33,6 @@ grub-btrfs
 gtk-vnc
 gvfs-smb
 helium-browser-bin
-htop
 hyprcursor
 hyprgraphics
 hypridle

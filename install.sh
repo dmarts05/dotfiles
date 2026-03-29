@@ -369,6 +369,7 @@ setup_dotfiles() {
     local configs=(
         "$HOME/.config/autostart"
         "$HOME/.config/awesome"
+        "$HOME/.config/btop"
         "$HOME/.config/hypr"
         "$HOME/.config/mpv"
         "$HOME/.config/waybar"
@@ -395,7 +396,7 @@ setup_dotfiles() {
     done
     
     pushd ./stow >/dev/null
-    stow -t ~ alacritty autostart awesome eza foot kwalletrc hypr mako mpv nvim rofi spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
+    stow -t ~ alacritty autostart awesome btop eza foot kwalletrc hypr mako mpv nvim rofi spotify-launcher.conf swayosd thunar tofi waybar wireplumber .zsh .zshrc
     popd >/dev/null
 }
 
