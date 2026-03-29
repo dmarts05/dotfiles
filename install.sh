@@ -386,6 +386,7 @@ setup_dotfiles() {
         "$HOME/.config/swayosd"
         "$HOME/.config/tofi"
         "$HOME/.config/uwsm"
+        "$HOME/.config/voxtype"
         "$HOME/.config/waybar"
         "$HOME/.config/wireplumber"
         "$HOME/.local/share/nvim"
@@ -399,7 +400,7 @@ setup_dotfiles() {
     done
     
     pushd ./stow >/dev/null
-    stow -t ~ alacritty autostart awesome btop eza foot hypr kwalletrc mako mpv nvim rofi spotify-launcher.conf swayosd thunar tofi uwsm waybar wireplumber .zsh .zshrc
+    stow -t ~ alacritty autostart awesome btop eza foot hypr kwalletrc mako mpv nvim rofi spotify-launcher.conf swayosd thunar tofi voxtype uwsm waybar wireplumber .zsh .zshrc
     popd >/dev/null
 }
 
