@@ -1,3 +1,4 @@
+
 alacritty
 android-tools
 appflowy-bin
@@ -116,6 +117,7 @@ waybar
 wireguard-tools
 wl-clipboard
 wl-clip-persist
+wtype
 xcolor
 xcursor-pro-cursor-theme
 xcursor-pro-hyprcursor

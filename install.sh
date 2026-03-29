@@ -106,7 +106,7 @@ setup_git() {
 #---------------------------------------
 setup_user() {
     log_info "Adding user '$USER' to common groups..."
-    sudo usermod -aG video,audio,lp,scanner "$USER"
+    sudo usermod -aG video,audio,lp,scanner,input "$USER"
 }
 
 #---------------------------------------
