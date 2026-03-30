@@ -20,6 +20,32 @@ end, { desc = "Save file" })
 vim.keymap.set("n", "j", "gj", { noremap = true, silent = true })
 vim.keymap.set("n", "k", "gk", { noremap = true, silent = true })
 
+-- Jump multiple lines at a time in normal and visual mode
+vim.keymap.set({ "n", "v" }, "<C-d>", "10j", { noremap = true })
+vim.keymap.set({ "n", "v" }, "<C-u>", "10k", { noremap = true })
+
+-- Clear search highlights on Escape
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { noremap = true, silent = true })
+
+-- VSCode-specific keybindings and settings
+if vim.g.vscode then
+    local vscode = require("vscode")
+
+    vim.api.nvim_create_autocmd("TextYankPost", {
+        callback = function()
+            vim.highlight.on_yank({ higroup = "Search", timeout = 200 })
+        end,
+    })
+
+    vim.keymap.set("n", "K", function()
+        vscode.action("editor.action.showHover")
+    end)
+
+    vim.keymap.set({ "n", "v" }, "<space>", function()
+        vscode.action("whichkey.show")
+    end)
+end
+
 -- Lazy.nvim setup
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
