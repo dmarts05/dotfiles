@@ -27,6 +27,14 @@ vim.keymap.set({ "n", "v" }, "<C-u>", "10k", { noremap = true })
 -- Clear search highlights on Escape
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { noremap = true, silent = true })
 
+-- Stop newline continuation of comments
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function()
+        vim.opt.formatoptions:remove({ "c", "r", "o" })
+    end,
+    desc = "Disable automatic comment continuation",
+})
+
 -- VSCode-specific keybindings and settings
 if vim.g.vscode then
     local vscode = require("vscode")
@@ -43,6 +51,14 @@ if vim.g.vscode then
 
     vim.keymap.set({ "n", "v" }, "<space>", function()
         vscode.action("whichkey.show")
+    end)
+
+    vim.keymap.set("n", "gcc", function()
+        vscode.action("editor.action.commentLine")
+    end)
+
+    vim.keymap.set("x", "gc", function()
+        vscode.action("editor.action.commentLine")
     end)
 end
 
@@ -74,6 +90,7 @@ plugins = {
         'numToStr/Comment.nvim',
         opts = {},
         lazy = false,
+        cond = not vim.g.vscode, 
     },
 }
 
