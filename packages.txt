@@ -68,6 +68,7 @@ npm
 numix-icon-theme-git
 numlockx
 nwg-look
+obsidian
 obs-studio
 openbsd-netcat
 os-prober
