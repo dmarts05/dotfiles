@@ -1,6 +1,5 @@
 alacritty
 android-tools
-appflowy-bin
 arandr
 ark
 awesome
