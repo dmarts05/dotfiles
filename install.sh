@@ -172,6 +172,7 @@ setup_libvirt() {
     sudo systemctl enable libvirtd virtlogd
     sudo cp -r ./replace/etc/libvirt/* /etc/libvirt/ || true
     sudo usermod -aG libvirt "$USER"
+    sudo virsh net-autostart default
 }
 
 #---------------------------------------

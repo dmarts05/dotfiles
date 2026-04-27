@@ -79,6 +79,7 @@ pnpm
 polkit-gnome
 qbittorrent
 qemu
+qemu-desktop
 qt6ct
 reflector
 reflector-simple
@@ -89,6 +90,7 @@ satty
 slurp
 smbclient
 spice-gtk
+spice-vdagent
 spotify-launcher
 stow
 swaybg
