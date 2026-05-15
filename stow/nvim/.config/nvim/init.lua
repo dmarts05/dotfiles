@@ -16,9 +16,11 @@ vim.keymap.set({ "n", "i", "v" }, "<C-s>", function()
   vim.cmd.write()
 end, { desc = "Save file" })
 
--- Make j/k move by *display* lines instead of real lines
-vim.keymap.set("n", "j", "gj", { noremap = true, silent = true })
-vim.keymap.set("n", "k", "gk", { noremap = true, silent = true })
+-- Make j/k move by display lines instead of real lines (non-VSCode only)
+if not vim.g.vscode then
+    vim.keymap.set("n", "j", "gj", { noremap = true, silent = true })
+    vim.keymap.set("n", "k", "gk", { noremap = true, silent = true })
+end
 
 -- Jump multiple lines at a time in normal and visual mode
 vim.keymap.set({ "n", "v" }, "<C-d>", "10j", { noremap = true })
@@ -44,6 +46,15 @@ if vim.g.vscode then
             vim.highlight.on_yank({ higroup = "Search", timeout = 200 })
         end,
     })
+
+    -- Make j/k move by display lines instead of real lines
+    vim.keymap.set("n", "j", function()
+        vscode.call("cursorMove", { args = { { to = "down", by = "wrappedLine", value = 1 } } })
+    end, { noremap = true, silent = true })
+
+    vim.keymap.set("n", "k", function()
+        vscode.call("cursorMove", { args = { { to = "up", by = "wrappedLine", value = 1 } } })
+    end, { noremap = true, silent = true })
 
     vim.keymap.set("n", "K", function()
         vscode.action("editor.action.showHover")
