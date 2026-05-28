@@ -73,7 +73,7 @@ openbsd-netcat
 os-prober
 pamixer
 pavucontrol
-pfetch-rs-bin
+pfetch-rs
 playerctl
 pnpm
 polkit-gnome
