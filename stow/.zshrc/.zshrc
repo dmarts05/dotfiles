@@ -36,5 +36,8 @@ alias ....='cd ../../..'
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh  # Must be last
 
+# Exports
+export PATH="$PATH:/home/kmp/.temporalio/bin"
+
 # Evals
 eval "$(direnv hook zsh)"

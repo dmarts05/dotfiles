@@ -30,6 +30,7 @@ gparted
 grim
 grub-btrfs
 gtk-vnc
+gvfs-mtp
 gvfs-smb
 helium-browser-bin
 hyprcursor
