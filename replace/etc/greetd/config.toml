@@ -1,5 +1,9 @@
 [terminal]
 vt = 1
 
+[initial_session]
+command = "uwsm start -e -D Hyprland hyprland.desktop"
+user = "__AUTOLOGIN_USER__"
+
 [default_session]
 command = "tuigreet --time --remember --remember-session --asterisks --cmd 'uwsm start -e -D Hyprland hyprland.desktop'"
