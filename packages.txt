@@ -45,7 +45,6 @@ hyprwayland-scanner
 kvantum
 kwalletmanager
 libnotify
-libreoffice-fresh
 mako
 meson
 mpv
@@ -62,6 +61,7 @@ numix-icon-theme-git
 nwg-look
 obsidian
 obs-studio
+onlyoffice
 openbsd-netcat
 pamixer
 pavucontrol
