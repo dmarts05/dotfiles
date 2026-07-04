@@ -198,19 +198,9 @@ setup_limine() {
 # Login manager setup
 #---------------------------------------
 setup_login_manager() {
-    local autologin_user
-
     log_info "Configuring greetd login manager..."
-    read -rp "[INFO] Enter username for greetd autologin: " autologin_user
-
-    if ! id "$autologin_user" &>/dev/null; then
-        log_error "User '$autologin_user' does not exist."
-        exit 1
-    fi
-
     sudo mkdir -p /etc/greetd /etc/pam.d /var/cache/tuigreet
     sudo cp ./replace/etc/greetd/config.toml /etc/greetd/config.toml
-    sudo sed -i "s/__AUTOLOGIN_USER__/$autologin_user/" /etc/greetd/config.toml
     sudo cp ./replace/etc/pam.d/greetd /etc/pam.d/greetd
     sudo chown greeter:greeter /var/cache/tuigreet
     sudo chmod 0755 /var/cache/tuigreet
