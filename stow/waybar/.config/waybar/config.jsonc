@@ -85,9 +85,10 @@
     "pulseaudio": {
         "format": "{icon}",
         "on-click": "pavucontrol",
-        "on-click-right": "pamixer -t",
+        "on-click-right": "~/.config/hypr/scripts/swayosd-focused --output-volume mute-toggle",
         "tooltip-format": "Playing at {volume}%",
-        "scroll-step": 5,
+        "on-scroll-up": "~/.config/hypr/scripts/swayosd-focused --output-volume raise",
+        "on-scroll-down": "~/.config/hypr/scripts/swayosd-focused --output-volume lower",
         "format-muted": "󰝟",
         "format-icons": {
             "default": ["", "", ""]

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -u
+
+restart_app() {
+    local process="$1"
+    shift
+
+    pkill -x "$process" 2>/dev/null || true
+    runapp "$@" >/dev/null 2>&1 &
+}
+
+hyprctl reload
+hyprpm reload -n >/dev/null 2>&1 || true
+
+restart_app waybar waybar
+restart_app mako mako
+restart_app swayosd-server swayosd-server
+restart_app swaybg swaybg -i "$HOME/.config/hypr/wallpaper.jpg" -m fill
+
+notify-send "Environment restarted"

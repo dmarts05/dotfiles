@@ -1,0 +1,5 @@
+#!/bin/sh
+
+monitor="$(hyprctl monitors -j | jq -r '.[] | select(.focused == true).name')"
+
+exec swayosd-client --monitor "$monitor" "$@"
