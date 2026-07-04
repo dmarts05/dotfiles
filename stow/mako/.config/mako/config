@@ -14,6 +14,15 @@ outer-margin=20
 [app-name=Spotify]
 invisible=1
 
+[desktop-entry=spotify]
+invisible=1
+
+[category=x-gnome.music]
+invisible=1
+
+[category=media]
+invisible=1
+
 [mode=do-not-disturb]
 invisible=true
 
@@ -22,4 +31,3 @@ invisible=false
 
 [urgency=critical]
 default-timeout=0
-
