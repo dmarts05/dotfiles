@@ -15,6 +15,7 @@ hyprpm reload -n >/dev/null 2>&1 || true
 
 restart_app waybar waybar
 restart_app mako mako
+restart_app hypridle hypridle
 restart_app swayosd-server swayosd-server
 restart_app swaybg swaybg -i "$HOME/.config/hypr/wallpaper.jpg" -m fill
 

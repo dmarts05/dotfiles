@@ -79,19 +79,6 @@ local globalkeys = gears.table.join(
     awful.key({}, "Print", function() awful.spawn(apps.screenshot) end),
     awful.key({ config.shiftkey }, "Print", function() awful.spawn(apps.screenshot_full) end),
     
-    -- Auto-Suspend Toggle
-    awful.key({ modkey }, "i", function ()
-        awful.spawn.easy_async_with_shell("pgrep xidlehook", function(stdout)
-            if stdout ~= "" then
-                awful.spawn("pkill xidlehook")
-                osd.notify_osd("System", "Auto-suspend DISABLED", "dialog-information")
-            else
-                awful.spawn("xidlehook --not-when-audio --timer 1800 'systemctl suspend' '' &")
-                osd.notify_osd("System", "Auto-suspend ENABLED (30 min)", "dialog-information")
-            end
-        end)
-    end),
-
     -- Audio
     awful.key({}, "XF86AudioRaiseVolume", function()
         awful.spawn.easy_async("pamixer -i 5", function()
