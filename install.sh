@@ -211,8 +211,13 @@ setup_grub() {
 # Login manager setup
 #---------------------------------------
 setup_login_manager() {
-    log_info "Enabling login manager..."
-    sudo systemctl enable ly@tty1.service
+    log_info "Configuring greetd login manager..."
+    sudo mkdir -p /etc/greetd /etc/pam.d /var/cache/tuigreet
+    sudo cp ./replace/etc/greetd/config.toml /etc/greetd/config.toml
+    sudo cp ./replace/etc/pam.d/greetd /etc/pam.d/greetd
+    sudo chown greeter:greeter /var/cache/tuigreet
+    sudo chmod 0755 /var/cache/tuigreet
+    sudo systemctl enable greetd.service
     log_success "Login manager enabled."
 }
 

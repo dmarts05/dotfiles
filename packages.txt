@@ -24,6 +24,8 @@ github-cli
 gnome-keyring
 gnome-themes-extra
 gparted
+greetd
+greetd-tuigreet
 grim
 grub-btrfs
 gtk-vnc
@@ -47,7 +49,6 @@ libnotify
 libreoffice-fresh
 linux
 linux-headers
-ly
 mako
 meson
 mpv
