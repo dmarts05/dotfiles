@@ -165,10 +165,11 @@ create_directories() {
 #---------------------------------------
 setup_libvirt() {
     log_info "Enabling libvirt services..."
-    sudo systemctl enable libvirtd virtlogd
     sudo cp -r ./replace/etc/libvirt/* /etc/libvirt/ || true
+    sudo systemctl enable --now libvirtd virtlogd
     sudo usermod -aG libvirt "$USER"
-    sudo virsh net-autostart default
+    sudo virsh --connect qemu:///system net-autostart default
+    sudo virsh --connect qemu:///system net-start default || true
 }
 
 #---------------------------------------
