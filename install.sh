@@ -208,59 +208,6 @@ setup_grub() {
 }
 
 #---------------------------------------
-# Xorg Input setup
-#---------------------------------------
-#---------------------------------------
-# Xorg Input setup
-#---------------------------------------
-setup_xorg_input() {
-    log_info "Configuring Xorg input devices (Keyboard, Mouse & Touchpad)..."
-
-    if [ ! -d "/etc/X11/xorg.conf.d" ]; then
-        sudo mkdir -p /etc/X11/xorg.conf.d
-    fi
-
-    # Keyboard settings (Layout & Repeat Rate)
-    # We use '90-' prefix to override/merge with systemd's 00-keyboard.conf
-    cat <<EOF | sudo tee /etc/X11/xorg.conf.d/90-keyboard-custom.conf > /dev/null
-Section "InputClass"
-    Identifier "custom-keyboard-rate"
-    MatchIsKeyboard "on"
-    Option "XkbLayout" "es"
-    Option "AutoRepeat" "210 40"
-    Option "XkbOptions" "terminate:ctrl_alt_bksp"
-EndSection
-EOF
-
-    # Mouse acceleration (Flat profile)
-    cat <<EOF | sudo tee /etc/X11/xorg.conf.d/50-mouse-acceleration.conf > /dev/null
-Section "InputClass"
-    Identifier "libinput-mouse-flat-profile"
-    Driver "libinput"
-    MatchIsPointer "yes"
-    MatchIsTouchpad "no"
-    MatchIsKeyboard "no"
-    Option "AccelProfile" "flat"
-    Option "AccelSpeed" "0"
-EndSection
-EOF
-
-    # Touchpad settings
-    cat <<EOF | sudo tee /etc/X11/xorg.conf.d/50-touchpad.conf > /dev/null
-Section "InputClass"
-    Identifier "libinput-touchpad-custom"
-    Driver "libinput"
-    MatchIsTouchpad "yes"
-    Option "Tapping" "true"
-    Option "NaturalScrolling" "true"
-    Option "DisableWhileTyping" "true"
-EndSection
-EOF
-
-    log_success "Xorg input configuration applied."
-}
-
-#---------------------------------------
 # Login manager setup
 #---------------------------------------
 setup_login_manager() {
@@ -319,28 +266,6 @@ setup_hyprland_device() {
     ln -sf "$env_target" "$uwsm_dir/env"
 }
 
-setup_awesome_device() {
-    local device="$1"
-    local awesome_dir="$HOME/.config/awesome"
-    local env_target
-    
-    case "$device" in
-        desktop|vm)
-            env_target="$awesome_dir/envs/desktop.lua"
-        ;;
-        laptop)
-            env_target="$awesome_dir/envs/laptop.lua"
-        ;;
-        *)
-            log_error "Unknown device: $device"
-            return 1
-        ;;
-    esac
-    
-    log_info "Linking Awesome configs for $device..."
-    ln -sf "$env_target" "$awesome_dir/envs.lua"
-}
-
 #---------------------------------------
 # Shell setup
 #---------------------------------------
@@ -373,7 +298,6 @@ setup_dotfiles() {
         "$HOME/.config/Thunar"
         "$HOME/.config/alacritty"
         "$HOME/.config/autostart"
-        "$HOME/.config/awesome"
         "$HOME/.config/btop"
         "$HOME/.config/eza"
         "$HOME/.config/foot"
@@ -382,7 +306,6 @@ setup_dotfiles() {
         "$HOME/.config/mako"
         "$HOME/.config/mpv"
         "$HOME/.config/nvim"
-        "$HOME/.config/rofi"
         "$HOME/.config/spotify-launcher.conf"
         "$HOME/.config/swayosd"
         "$HOME/.config/tofi"
@@ -400,7 +323,7 @@ setup_dotfiles() {
     done
     
     pushd ./stow >/dev/null
-    stow -t ~ alacritty autostart awesome btop eza foot hypr kwalletrc mako mpv nvim rofi spotify-launcher.conf swayosd thunar tofi uwsm waybar wireplumber .zsh .zshrc
+    stow -t ~ alacritty autostart btop eza foot hypr kwalletrc mako mpv nvim spotify-launcher.conf swayosd thunar tofi uwsm waybar wireplumber .zsh .zshrc
     popd >/dev/null
 }
 
@@ -427,12 +350,10 @@ main() {
     create_directories
     setup_libvirt
     setup_grub
-    setup_xorg_input
     setup_login_manager
     setup_shell
     cleanup_system
     setup_dotfiles
-    setup_awesome_device "$device"
     setup_hyprland_device "$device"
     setup_hyprland_plugins
     

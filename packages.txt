@@ -1,8 +1,6 @@
 alacritty
 android-tools
-arandr
 ark
-awesome
 blueberry
 bridge-utils
 brightnessctl
@@ -20,7 +18,6 @@ docker-compose
 etcher-bin
 exfatprogs
 eza
-flameshot
 foot
 freerdp
 github-cli
@@ -44,14 +41,12 @@ hyprshot
 hyprsunset
 hyprutils
 hyprwayland-scanner
-i3lock-color
 kvantum
 kwalletmanager
 libnotify
 libreoffice-fresh
 linux
 linux-headers
-lxappearance
 ly
 mako
 meson
@@ -66,7 +61,6 @@ noto-fonts-emoji
 noto-fonts-extra
 npm
 numix-icon-theme-git
-numlockx
 nwg-look
 obsidian
 obs-studio
@@ -85,7 +79,6 @@ qt6ct
 reflector
 reflector-simple
 remmina
-rofi
 runapp
 satty
 slurp
@@ -120,14 +113,10 @@ wireguard-tools
 wl-clipboard
 wl-clip-persist
 wtype
-xcolor
 xcursor-pro-cursor-theme
 xcursor-pro-hyprcursor
 xdg-desktop-portal-hyprland
 xdg-user-dirs
 xdg-user-dirs-gtk
-xorg
-xsel
-xss-lock
 zip
 zsh
