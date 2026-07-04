@@ -80,7 +80,7 @@ install_vm_packages() {
 
 install_nvidia_packages() {
     log_info "Installing NVIDIA drivers and utilities..."
-    paru -S --noconfirm --needed nvidia-open nvidia-utils nvidia-settings
+    paru -S --noconfirm --needed nvidia-open nvidia-utils nvidia-settings libva-nvidia-driver
     sudo systemctl enable nvidia-persistenced.service || true
 }
 
