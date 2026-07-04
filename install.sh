@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# This installer expects a CachyOS base installation with no desktop environment.
 set -euo pipefail
 
 #---------------------------------------
@@ -22,17 +23,12 @@ if [[ "$EUID" -eq 0 ]]; then
 fi
 
 #---------------------------------------
-# Ensure paru-bin is installed
+# Ensure paru is installed
 #---------------------------------------
 if ! command -v paru &>/dev/null; then
-    log_info "paru not found. Installing paru-bin from AUR..."
-    sudo pacman -S --needed --noconfirm base-devel git
-    git clone https://aur.archlinux.org/paru-bin.git /tmp/paru-bin
-    pushd /tmp/paru-bin >/dev/null
-    makepkg -si --noconfirm
-    popd >/dev/null
-    rm -rf /tmp/paru-bin
-    log_success "paru-bin installed successfully."
+    log_info "paru not found. Installing paru from CachyOS repositories..."
+    sudo pacman -S --needed --noconfirm paru
+    log_success "paru installed successfully."
 fi
 
 #---------------------------------------
@@ -176,35 +172,28 @@ setup_libvirt() {
 }
 
 #---------------------------------------
-# GRUB setup
+# Limine setup
 #---------------------------------------
-setup_grub() {
-    log_info "Configuring GRUB..."
-    
-    local grub_file="/etc/default/grub"
-    
-    if [[ -f "$grub_file" ]]; then
-        sudo sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=1/' "$grub_file"
-        
-        if grep -Eq "^#GRUB_DISABLE_OS_PROBER=(true|false)" "$grub_file"; then
-            sudo sed -i 's/^#GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' "$grub_file"
-            elif grep -Eq "^GRUB_DISABLE_OS_PROBER=.*" "$grub_file"; then
-            sudo sed -i 's/^GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' "$grub_file"
-        else
-            echo "GRUB_DISABLE_OS_PROBER=false" | sudo tee -a "$grub_file" >/dev/null
-        fi
-        
-        log_info "Updating GRUB configuration..."
-        sudo grub-mkconfig -o /boot/grub/grub.cfg
-    else
-        log_error "GRUB config file not found at $grub_file"
+setup_limine() {
+    log_info "Configuring Limine..."
+
+    local limine_file="/boot/limine.conf"
+
+    if [[ ! -f "$limine_file" ]]; then
+        log_info "Limine config file not found at $limine_file; skipping Limine setup."
+        return 0
     fi
-    
-    log_info "Enabling cron and grub-btrfs services..."
-    sudo systemctl enable cronie
-    sudo systemctl enable grub-btrfsd
-    
-    log_success "GRUB configuration complete."
+
+    if grep -Eq "^[[:space:]]*timeout:" "$limine_file"; then
+        sudo sed -i 's/^[[:space:]]*timeout:.*/timeout: 1/' "$limine_file"
+    else
+        echo "timeout: 1" | sudo tee -a "$limine_file" >/dev/null
+    fi
+
+    log_info "Regenerating Limine entries..."
+    sudo limine-mkinitcpio
+
+    log_success "Limine configuration complete."
 }
 
 #---------------------------------------
@@ -361,7 +350,7 @@ main() {
     setup_cups
     create_directories
     setup_libvirt
-    setup_grub
+    setup_limine
     setup_login_manager
     setup_shell
     cleanup_system

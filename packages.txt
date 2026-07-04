@@ -27,7 +27,6 @@ gparted
 greetd
 greetd-tuigreet
 grim
-grub-btrfs
 gtk-vnc
 gvfs-mtp
 gvfs-smb
@@ -47,8 +46,6 @@ kvantum
 kwalletmanager
 libnotify
 libreoffice-fresh
-linux
-linux-headers
 mako
 meson
 mpv
@@ -66,7 +63,6 @@ nwg-look
 obsidian
 obs-studio
 openbsd-netcat
-os-prober
 pamixer
 pavucontrol
 pfetch-rs
@@ -77,8 +73,6 @@ qbittorrent
 qemu
 qemu-desktop
 qt6ct
-reflector
-reflector-simple
 remmina
 runapp
 satty
@@ -94,7 +88,6 @@ system-config-printer
 telegram-desktop
 thunar
 thunar-archive-plugin
-timeshift
 tofi
 tree
 ttf-cascadia-mono-nerd
