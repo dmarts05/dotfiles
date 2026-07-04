@@ -1,0 +1,27 @@
+#!/bin/sh
+
+selection="$(printf '%s\n' \
+  'Lock' \
+  'Suspend' \
+  'Log out' \
+  'Reboot' \
+  'Power off' |
+  tofi --prompt-text 'Power: ')"
+
+case "$selection" in
+  'Lock')
+    exec ~/.config/hypr/scripts/lock-screen
+    ;;
+  'Suspend')
+    exec systemctl suspend
+    ;;
+  'Log out')
+    exec hyprctl dispatch exit
+    ;;
+  'Reboot')
+    exec systemctl reboot
+    ;;
+  'Power off')
+    exec systemctl poweroff
+    ;;
+esac
