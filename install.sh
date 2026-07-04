@@ -180,19 +180,16 @@ setup_limine() {
 
     local limine_file="/boot/limine.conf"
 
-    if [[ ! -f "$limine_file" ]]; then
+    if ! sudo test -f "$limine_file"; then
         log_info "Limine config file not found at $limine_file; skipping Limine setup."
         return 0
     fi
 
-    if grep -Eq "^[[:space:]]*timeout:" "$limine_file"; then
+    if sudo grep -Eq "^[[:space:]]*timeout:" "$limine_file"; then
         sudo sed -i 's/^[[:space:]]*timeout:.*/timeout: 1/' "$limine_file"
     else
         echo "timeout: 1" | sudo tee -a "$limine_file" >/dev/null
     fi
-
-    log_info "Regenerating Limine entries..."
-    sudo limine-mkinitcpio
 
     log_success "Limine configuration complete."
 }
