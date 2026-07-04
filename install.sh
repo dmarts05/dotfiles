@@ -225,24 +225,31 @@ setup_login_manager() {
 # Hyprland setup
 #---------------------------------------
 setup_hyprland_plugins() {
-    log_info "Adding Hyprland plugins..."
-    
-    local plugin_url="https://github.com/Duckonaut/split-monitor-workspaces"
-    local plugin_name="split-monitor-workspaces"
-    
-    hyprpm update
-    
-    if hyprpm list | grep -q "$plugin_name"; then
-        log_info "Plugin '$plugin_name' already installed, skipping add."
+    log_info "Installing Hyprland Lua plugins..."
+
+    local plugin_url="https://github.com/zjeffer/split-monitor-workspaces"
+    local plugin_dir="$HOME/.config/hypr/plugins/split-monitor-workspaces"
+
+    mkdir -p "$(dirname "$plugin_dir")"
+
+    if [[ -d "$plugin_dir/.git" ]]; then
+        log_info "Updating split-monitor-workspaces..."
+        git -C "$plugin_dir" fetch -Ppft
     else
-        hyprpm add "$plugin_url"
+        git clone "$plugin_url" "$plugin_dir"
     fi
-    
-    hyprpm enable "$plugin_name" || log_warn "Plugin '$plugin_name' already enabled."
-    
-    hyprpm reload
-    
-    log_success "Hyprland plugin setup completed."
+
+    local hypr_version
+    hypr_version="$(hyprland --version | awk 'NR == 1 { print $2 }')"
+
+    if [[ "$hypr_version" =~ ^0\.55\. ]]; then
+        git -C "$plugin_dir" checkout release/0.55.x
+        git -C "$plugin_dir" pull --ff-only
+    else
+        log_warn "Hyprland version '$hypr_version' is not 0.55.x; leaving split-monitor-workspaces on its current branch."
+    fi
+
+    log_success "Hyprland Lua plugin setup completed."
 }
 
 setup_hyprland_device() {
@@ -253,11 +260,11 @@ setup_hyprland_device() {
     
     case "$device" in
         desktop|vm)
-            monitor_target="$hypr_dir/monitors/desktop.conf"
+            monitor_target="$hypr_dir/monitors/desktop.lua"
             env_target="$uwsm_dir/desktop"
         ;;
         laptop)
-            monitor_target="$hypr_dir/monitors/laptop.conf"
+            monitor_target="$hypr_dir/monitors/laptop.lua"
             env_target="$uwsm_dir/laptop"
         ;;
         *)
@@ -267,7 +274,7 @@ setup_hyprland_device() {
     esac
     
     log_info "Linking Hyprland configs for $device..."
-    ln -sf "$monitor_target" "$hypr_dir/monitors.conf"
+    ln -sf "$monitor_target" "$hypr_dir/monitors.lua"
     ln -sf "$env_target" "$uwsm_dir/env"
 }
 

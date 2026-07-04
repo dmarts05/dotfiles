@@ -1,0 +1,8 @@
+require("modules.env")
+require("modules.monitors")
+require("modules.look")
+require("modules.input")
+require("modules.plugins")
+require("modules.windows")
+require("modules.bindings")
+require("modules.autostart")
