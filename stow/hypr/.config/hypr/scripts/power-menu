@@ -19,7 +19,7 @@ case "$selection" in
     exec systemctl suspend
     ;;
   'Log out')
-    exec hyprctl dispatch exit
+    exec uwsm stop
     ;;
   'Lock')
     exec ~/.config/hypr/scripts/lock-screen
