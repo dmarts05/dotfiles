@@ -47,6 +47,7 @@ kwalletmanager
 libnotify
 mako
 meson
+mousepad
 mpv
 neovim
 network-manager-applet
